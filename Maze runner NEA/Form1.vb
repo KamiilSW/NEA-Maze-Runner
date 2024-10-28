@@ -4,7 +4,7 @@
     Dim counter As Integer = 0
     Dim wallsList As New List(Of PictureBox)
     Dim unvisitedCells As New List(Of PictureBox)
-    Dim visitedStack As New Stack(Of PictureBox)
+    Dim Stack As New Stack(Of PictureBox)
     Dim CellsOnEdge As New List(Of PictureBox)
     Dim allCells As New List(Of PictureBox)
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -30,7 +30,7 @@
                 End If
 
                 If isAWall = True Then
-                    cell.BackColor = Color.Black
+                    cell.BackColor = Color.Lavender
                     wallsList.Add(cell)
                     isAWall = False
                 Else
@@ -42,7 +42,7 @@
                 ' Add cells on the edge to the list
                 If i = 0 OrElse i = gridSize - 1 OrElse j = 0 OrElse j = gridSize - 1 Then
                     CellsOnEdge.Add(cell)
-                    cell.BackColor = Color.Black
+                    cell.BackColor = Color.Lavender
                     wallsList.Add(cell)
                     unvisitedCells.Remove(cell)
                 End If
@@ -59,57 +59,49 @@
 
         ' Starts path creation
         GenerateMaze()
+        FixBackground()
+        FindExit()
     End Sub
 
     Sub GenerateMaze()
-        Dim unvisitedNeighbours As New List(Of PictureBox)
         Dim previousCell As PictureBox = Nothing
-        Dim currentCell As PictureBox = FindStartCell(Nothing)
-        CreateStartCell(currentCell)
-        visitedStack.Push(currentCell)
+        Dim currentCell As PictureBox = createRandomStartCell(Nothing)
+        Stack.Push(currentCell)
 
-        If unvisitedCells.Contains(currentCell) Then
-            unvisitedCells.Remove(currentCell)
-        End If
-
-        Do While visitedStack.Count > 0 And unvisitedCells.Count > 0
-            unvisitedNeighbours.Clear()
-
+        Do
             previousCell = currentCell
-            currentCell = FindUnvisitedNeighbourCell(currentCell, unvisitedNeighbours)
+            currentCell = FindOneUnvisitedNeighbourCell(currentCell)
 
-            If unvisitedNeighbours.Count > 0 Then
+            If currentCell IsNot Nothing Then
+                ChangeCellColour(currentCell)
                 BreakWallBetween(previousCell, currentCell)
-                visitedStack.Push(currentCell)
-
-                If unvisitedCells.Contains(currentCell) Then
-                    unvisitedCells.Remove(currentCell)
-                End If
+                Stack.Push(currentCell)
             Else
-                visitedStack.Pop()
+                Stack.Pop()
 
-                If visitedStack.Count > 0 Then
-                    currentCell = visitedStack.Peek()
-                Else
+                If Stack.Count = 0 Then
                     Exit Do
                 End If
+
+                currentCell = Stack.Peek()
             End If
-        Loop
+        Loop Until Stack.Count = 0
+
     End Sub
 
     Dim random As New Random()
-    Function FindStartCell(currentCell)
+    Function createRandomStartCell(currentCell)
         Dim randInt As Integer = random.Next(unvisitedCells.Count)
 
         currentCell = unvisitedCells.Item(randInt)
+        currentCell.BackColor = Color.Black
+
         Return currentCell
     End Function
 
-    Sub CreateStartCell(currentCell)
-        currentCell.BackColor = Color.Lavender
-    End Sub
+    Function FindOneUnvisitedNeighbourCell(currentCell)
+        Dim unvisitedNeighbours As New List(Of PictureBox)
 
-    Function FindUnvisitedNeighbourCell(currentCell, unvisitedNeighbours)
         Dim x As Integer = currentCell.Location.X / cellSize
         Dim y As Integer = currentCell.Location.Y / cellSize
 
@@ -122,7 +114,7 @@
             If moveX < gridSize And moveY >= 0 And moveX >= 0 And moveY < gridSize Then
                 Dim neighbourCell As PictureBox = allCells(moveY * gridSize + moveX)
 
-                If neighbourCell.BackColor = Color.DarkSlateGray And Not visitedStack.Contains(neighbourCell) Then
+                If neighbourCell.BackColor = Color.DarkSlateGray And Not Stack.Contains(neighbourCell) Then
                     unvisitedNeighbours.Add(neighbourCell)
                 End If
             End If
@@ -135,6 +127,10 @@
         Return Nothing
     End Function
 
+    Sub ChangeCellColour(currentCell)
+        currentCell.BackColor = Color.Black
+    End Sub
+
     Sub BreakWallBetween(previousCell, currentCell)
         Dim x As Integer = (previousCell.Location.X + currentCell.Location.X) / 2
         Dim y As Integer = (previousCell.Location.Y + currentCell.Location.Y) / 2
@@ -142,7 +138,19 @@
         Dim wallCell As PictureBox = allCells((y / cellSize) * gridSize + (x / cellSize))
 
         If wallCell IsNot Nothing Then
-            wallCell.BackColor = Color.Lavender
+            wallCell.BackColor = Color.Black
         End If
+    End Sub
+
+    Sub FixBackground()
+        For i = 0 To allCells.Count - 1
+            If allCells.Item(i).BackColor <> Color.Black Then
+                allCells.Item(i).BackColor = Color.Lavender
+            End If
+        Next
+    End Sub
+
+    Sub FindExit()
+
     End Sub
 End Class
