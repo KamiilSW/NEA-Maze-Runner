@@ -8,8 +8,8 @@
     Dim CellsOnEdge As New List(Of PictureBox)
     Dim allCells As New List(Of PictureBox)
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        Me.BackColor = Color.MediumPurple
-        Panel1.Location = New Point(10, 10) ' Puts the panel's location at this point
+        Me.Text = "Maze"
+        Panel1.Location = New Point(540, 200) ' Puts the panel's location at this point
         Panel1.Size = New Size(gridSize * cellSize, gridSize * cellSize)
         Me.Controls.Add(Panel1)
         Dim isAWall As Boolean = True
@@ -31,7 +31,7 @@
                 End If
 
                 If isAWall = True Then
-                    cell.BackColor = Color.Black
+                    cell.BackColor = Color.DarkSlateGray
                     wallsList.Add(cell)
                     isAWall = False
                 Else
@@ -43,7 +43,7 @@
                 ' Add cells on the edge to the list
                 If i = 0 OrElse i = gridSize - 1 OrElse j = 0 OrElse j = gridSize - 1 Then
                     CellsOnEdge.Add(cell)
-                    cell.BackColor = Color.Black
+                    cell.BackColor = Color.DarkSlateGray
                     wallsList.Add(cell)
                     unvisitedCells.Remove(cell)
                 End If
@@ -95,7 +95,7 @@
         Dim randInt As Integer = random.Next(unvisitedCells.Count)
 
         currentCell = unvisitedCells.Item(randInt)
-        currentCell.BackColor = Color.MediumPurple
+        currentCell.BackColor = Color.Black
 
         Return currentCell
     End Function
@@ -129,7 +129,7 @@
     End Function
 
     Sub ChangeCellColour(currentCell)
-        currentCell.BackColor = Color.MediumPurple
+        currentCell.BackColor = Color.Black
     End Sub
 
     Sub BreakWallBetween(previousCell, currentCell)
@@ -139,14 +139,14 @@
         Dim wallCell As PictureBox = allCells((y / cellSize) * gridSize + (x / cellSize))
 
         If wallCell IsNot Nothing Then
-            wallCell.BackColor = Color.MediumPurple
+            wallCell.BackColor = Color.Black
         End If
     End Sub
 
     Sub FixBackground()
         For i = 0 To allCells.Count - 1
-            If allCells.Item(i).BackColor <> Color.MediumPurple Then
-                allCells.Item(i).BackColor = Color.Black
+            If allCells.Item(i).BackColor <> Color.Black Then
+                allCells.Item(i).BackColor = Color.DarkSlateGray
             End If
         Next
     End Sub
@@ -165,7 +165,7 @@
             visitedNeighbours = findVisitedNeighboursOfCell(exitCell, visitedNeighbours)
         Loop Until visitedNeighbours.Count <> 0
 
-        exitCell.BackColor = Color.MediumPurple
+        exitCell.BackColor = Color.Black
     End Sub
 
     Function findVisitedNeighboursOfCell(exitCell, visitedNeighbours)
@@ -182,7 +182,7 @@
             If moveX < gridSize And moveY >= 0 And moveX >= 0 And moveY < gridSize Then
                 Dim neighbourCell As PictureBox = allCells(moveY * gridSize + moveX)
 
-                If neighbourCell.BackColor = Color.MediumPurple Then
+                If neighbourCell.BackColor = Color.Black Then
                     visitedNeighbours.Add(neighbourCell)
                 End If
             End If
