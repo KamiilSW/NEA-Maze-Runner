@@ -9,6 +9,7 @@
     Dim allCells As New List(Of PictureBox)
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.Text = "Maze"
+        Me.BackColor = Color.DarkSlateGray
         Panel1.Location = New Point(540, 200) ' Puts the panel's location at this point
         Panel1.Size = New Size(gridSize * cellSize, gridSize * cellSize)
         Me.Controls.Add(Panel1)
@@ -58,15 +59,16 @@
             Next
         Next
 
-        ' Starts path creation
-        GenerateMaze()
+        Dim startCell As PictureBox = createRandomStartCell(Nothing)
+        GenerateMaze(startCell)
         FixBackground()
         FindExit()
+        FindStart(startCell)
     End Sub
 
-    Sub GenerateMaze()
+    Sub GenerateMaze(startCell)
         Dim previousCell As PictureBox = Nothing
-        Dim currentCell As PictureBox = createRandomStartCell(Nothing)
+        Dim currentCell As PictureBox = startCell
         Stack.Push(currentCell)
 
         Do
@@ -74,9 +76,7 @@
             currentCell = FindOneUnvisitedNeighbourCell(currentCell)
 
             If currentCell IsNot Nothing Then
-                ChangeCellColour(currentCell)
-                BreakWallBetween(previousCell, currentCell)
-                Stack.Push(currentCell)
+                BuildPathToNeighbour(currentCell, previousCell)
             Else
                 Stack.Pop()
 
@@ -88,6 +88,12 @@
             End If
         Loop Until Stack.Count = 0
 
+    End Sub
+
+    Sub BuildPathToNeighbour(currentCell, previousCell)
+        ChangeCellColour(currentCell)
+        BreakWallBetween(previousCell, currentCell)
+        Stack.Push(currentCell)
     End Sub
 
     Dim random As New Random()
@@ -157,37 +163,15 @@
         Dim visitedNeighbours As New List(Of PictureBox)
 
         Do
-            visitedNeighbours.Clear()
-
             randInt = random.Next(CellsOnEdge.Count)
+
             exitCell = CellsOnEdge.Item(randInt)
+        Loop Until exitCell.BackColor = Color.Black
 
-            visitedNeighbours = findVisitedNeighboursOfCell(exitCell, visitedNeighbours)
-        Loop Until visitedNeighbours.Count <> 0
-
-        exitCell.BackColor = Color.Black
+        exitCell.BackColor = Color.Yellow
     End Sub
 
-    Function findVisitedNeighboursOfCell(exitCell, visitedNeighbours)
-
-        Dim x As Integer = exitCell.Location.X / cellSize
-        Dim y As Integer = exitCell.Location.Y / cellSize
-
-        Dim possibleMoves As Point() = {New Point(0, -1), New Point(0, 1), New Point(-1, 0), New Point(1, 0)}
-
-        For Each move As Point In possibleMoves
-            Dim moveX As Integer = x + move.X
-            Dim moveY As Integer = y + move.Y
-
-            If moveX < gridSize And moveY >= 0 And moveX >= 0 And moveY < gridSize Then
-                Dim neighbourCell As PictureBox = allCells(moveY * gridSize + moveX)
-
-                If neighbourCell.BackColor = Color.Black Then
-                    visitedNeighbours.Add(neighbourCell)
-                End If
-            End If
-        Next
-
-        Return visitedNeighbours
-    End Function
+    Sub FindStart(startCell)
+        startCell.BackColor = Color.Yellow
+    End Sub
 End Class
