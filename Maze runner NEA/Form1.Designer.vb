@@ -43,6 +43,6 @@ Partial Class Form1
         ResumeLayout(False)
     End Sub
 
-    Friend WithEvents Panel1 As Panel
+    Public WithEvents Panel1 As New System.Windows.Forms.Panel
 
 End Class

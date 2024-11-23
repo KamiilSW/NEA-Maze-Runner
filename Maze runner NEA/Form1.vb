@@ -1,16 +1,17 @@
 ﻿Public Class Form1
-    Dim gridSize As Integer = 45
-    Dim cellSize As Integer = 10
+    Public gridSize As Integer = 45
+    Public cellSize As Integer = 10
     Dim counter As Integer = 0
     Dim wallsList As New List(Of PictureBox)
     Dim unvisitedCells As New List(Of PictureBox)
     Dim Stack As New Stack(Of PictureBox)
     Dim CellsOnEdge As New List(Of PictureBox)
     Dim allCells As New List(Of PictureBox)
+    Public startCell As PictureBox = Nothing
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.Text = "Maze"
-        Me.BackColor = Color.DarkSlateGray
-        Panel1.Location = New Point(540, 200) ' Puts the panel's location at this point
+        Me.BackColor = Color.White
+        Panel1.Location = New Point(10, 10)
         Panel1.Size = New Size(gridSize * cellSize, gridSize * cellSize)
         Me.Controls.Add(Panel1)
         Dim isAWall As Boolean = True
@@ -59,11 +60,12 @@
             Next
         Next
 
-        Dim startCell As PictureBox = createRandomStartCell(Nothing)
+        startCell = createRandomStartCell(Nothing)
         GenerateMaze(startCell)
         FixBackground()
         FindExit()
         FindStart(startCell)
+        CreateAvatar()
     End Sub
 
     Sub GenerateMaze(startCell)
@@ -87,16 +89,14 @@
                 currentCell = Stack.Peek()
             End If
         Loop Until Stack.Count = 0
-
-    End Sub
-
-    Sub BuildPathToNeighbour(currentCell, previousCell)
-        ChangeCellColour(currentCell)
-        BreakWallBetween(previousCell, currentCell)
-        Stack.Push(currentCell)
     End Sub
 
     Dim random As New Random()
+    Sub BuildPathToNeighbour(currentCell, previousCell)
+        VisitCell(currentCell)
+        BreakWallBetween(previousCell, currentCell)
+        Stack.Push(currentCell)
+    End Sub
     Function createRandomStartCell(currentCell)
         Dim randInt As Integer = random.Next(unvisitedCells.Count)
 
@@ -105,7 +105,6 @@
 
         Return currentCell
     End Function
-
     Function FindOneUnvisitedNeighbourCell(currentCell)
         Dim unvisitedNeighbours As New List(Of PictureBox)
 
@@ -133,11 +132,9 @@
 
         Return Nothing
     End Function
-
-    Sub ChangeCellColour(currentCell)
+    Sub VisitCell(currentCell)
         currentCell.BackColor = Color.Black
     End Sub
-
     Sub BreakWallBetween(previousCell, currentCell)
         Dim x As Integer = (previousCell.Location.X + currentCell.Location.X) / 2
         Dim y As Integer = (previousCell.Location.Y + currentCell.Location.Y) / 2
@@ -148,7 +145,6 @@
             wallCell.BackColor = Color.Black
         End If
     End Sub
-
     Sub FixBackground()
         For i = 0 To allCells.Count - 1
             If allCells.Item(i).BackColor <> Color.Black Then
@@ -156,7 +152,6 @@
             End If
         Next
     End Sub
-
     Sub FindExit()
         Dim randInt As Integer
         Dim exitCell As PictureBox
@@ -170,8 +165,12 @@
 
         exitCell.BackColor = Color.Yellow
     End Sub
-
     Sub FindStart(startCell)
         startCell.BackColor = Color.Yellow
+    End Sub
+
+    Sub CreateAvatar()
+        Dim avatar As New Avatar()
+        avatar.AvatarProperties()
     End Sub
 End Class
