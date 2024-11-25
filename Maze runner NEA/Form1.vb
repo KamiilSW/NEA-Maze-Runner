@@ -8,9 +8,11 @@
     Dim CellsOnEdge As New List(Of PictureBox)
     Dim allCells As New List(Of PictureBox)
     Public startCell As PictureBox = Nothing
+    Public avatar As New Avatar()
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.Text = "Maze"
         Me.BackColor = Color.White
+        Me.KeyPreview = True
         Panel1.Location = New Point(10, 10)
         Panel1.Size = New Size(gridSize * cellSize, gridSize * cellSize)
         Me.Controls.Add(Panel1)
@@ -65,7 +67,7 @@
         FixBackground()
         FindExit()
         FindStart(startCell)
-        CreateAvatar()
+        avatar.AvatarProperties(Panel1, startCell, cellSize)
     End Sub
 
     Sub GenerateMaze(startCell)
@@ -169,8 +171,19 @@
         startCell.BackColor = Color.Yellow
     End Sub
 
-    Sub CreateAvatar()
-        Dim avatar As New Avatar()
-        avatar.AvatarProperties()
+    Public Sub Form1_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyDown
+        Dim avatarPictureBox = avatar.Avatar ' Access the PictureBox
+
+        If avatarPictureBox IsNot Nothing Then
+            If e.KeyCode = Keys.W Then
+                avatarPictureBox.Location = New Point(avatarPictureBox.Location.X, avatarPictureBox.Location.Y - cellSize)
+            ElseIf e.KeyCode = Keys.S Then
+                avatarPictureBox.Location = New Point(avatarPictureBox.Location.X, avatarPictureBox.Location.Y + cellSize)
+            ElseIf e.KeyCode = Keys.A Then
+                avatarPictureBox.Location = New Point(avatarPictureBox.Location.X - cellSize, avatarPictureBox.Location.Y)
+            ElseIf e.KeyCode = Keys.D Then
+                avatarPictureBox.Location = New Point(avatarPictureBox.Location.X + cellSize, avatarPictureBox.Location.Y)
+            End If
+        End If
     End Sub
 End Class
