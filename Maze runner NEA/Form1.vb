@@ -12,7 +12,7 @@
     Dim exitCell As PictureBox
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.Text = "Maze"
-        Me.BackColor = Color.White
+        Me.BackColor = Color.Black
         Me.KeyPreview = True
         Panel1.Location = New Point(10 + cellSize, 10 + cellSize)
         Panel1.Size = New Size(gridSize * cellSize, gridSize * cellSize)
@@ -179,7 +179,6 @@
         Dim leftEdgeHasWalls As Boolean = True
         Dim rightEdgeHasWalls As Boolean = True
 
-        ' Check for walls along the top and bottom edges
         For x As Integer = 0 To gridSize - 1
             Dim topCellIndex As Integer = x
             Dim bottomCellIndex As Integer = (gridSize - 1) * gridSize + x
@@ -188,7 +187,6 @@
             If allCells(bottomCellIndex).BackColor <> Color.DarkSlateGray Then bottomEdgeHasWalls = False
         Next
 
-        ' Check for walls along the left and right edges
         For y As Integer = 0 To gridSize - 1
             Dim leftCellIndex As Integer = y * gridSize
             Dim rightCellIndex As Integer = (y * gridSize) + (gridSize - 1)
@@ -197,12 +195,11 @@
             If allCells(rightCellIndex).BackColor <> Color.DarkSlateGray Then rightEdgeHasWalls = False
         Next
 
-        ' Add missing walls outside the maze
         If Not topEdgeHasWalls Then
             For x As Integer = 0 To gridSize - 1
                 Dim wall As New PictureBox()
                 wall.Size = New Size(cellSize, cellSize)
-                wall.Location = New Point(panelXOffset + (x * cellSize), panelYOffset - cellSize) ' Place above the maze
+                wall.Location = New Point(panelXOffset + (x * cellSize), panelYOffset - cellSize)
                 wall.BackColor = Color.DarkSlateGray
                 Me.Controls.Add(wall)
                 wallsList.Add(wall)
@@ -213,7 +210,7 @@
             For x As Integer = 0 To gridSize - 1
                 Dim wall As New PictureBox()
                 wall.Size = New Size(cellSize, cellSize)
-                wall.Location = New Point(panelXOffset + (x * cellSize), panelYOffset + panelHeight) ' Place below the maze
+                wall.Location = New Point(panelXOffset + (x * cellSize), panelYOffset + panelHeight)
                 wall.BackColor = Color.DarkSlateGray
                 Me.Controls.Add(wall)
                 wallsList.Add(wall)
@@ -224,7 +221,7 @@
             For y As Integer = 0 To gridSize - 1
                 Dim wall As New PictureBox()
                 wall.Size = New Size(cellSize, cellSize)
-                wall.Location = New Point(panelXOffset - cellSize, panelYOffset + (y * cellSize)) ' Place to the left of the maze
+                wall.Location = New Point(panelXOffset - cellSize, panelYOffset + (y * cellSize))
                 wall.BackColor = Color.DarkSlateGray
                 Me.Controls.Add(wall)
                 wallsList.Add(wall)
@@ -235,7 +232,7 @@
             For y As Integer = 0 To gridSize - 1
                 Dim wall As New PictureBox()
                 wall.Size = New Size(cellSize, cellSize)
-                wall.Location = New Point(panelXOffset + panelWidth, panelYOffset + (y * cellSize)) ' Place to the right of the maze
+                wall.Location = New Point(panelXOffset + panelWidth, panelYOffset + (y * cellSize))
                 wall.BackColor = Color.DarkSlateGray
                 Me.Controls.Add(wall)
                 wallsList.Add(wall)
@@ -258,6 +255,9 @@
 
         If e.KeyCode = Keys.W Then
             targetLocation = New Point(avatarPictureBox.Location.X, avatarPictureBox.Location.Y - cellSize)
+            If IsTargetLocationOutsideBounds(targetLocation) = True Then
+                Exit Sub
+            End If
 
             For Each wall As Control In wallsList
                 If wall.Location = targetLocation Then
@@ -268,6 +268,9 @@
             avatarPictureBox.Location = New Point(avatarPictureBox.Location.X, avatarPictureBox.Location.Y - cellSize)
         ElseIf e.KeyCode = Keys.S Then
             targetLocation = New Point(avatarPictureBox.Location.X, avatarPictureBox.Location.Y + cellSize)
+            If IsTargetLocationOutsideBounds(targetLocation) = True Then
+                Exit Sub
+            End If
 
             For Each wall As Control In wallsList
                 If wall.Location = targetLocation Then
@@ -278,7 +281,9 @@
             avatarPictureBox.Location = New Point(avatarPictureBox.Location.X, avatarPictureBox.Location.Y + cellSize)
         ElseIf e.KeyCode = Keys.A Then
             targetLocation = New Point(avatarPictureBox.Location.X - cellSize, avatarPictureBox.Location.Y)
-
+            If IsTargetLocationOutsideBounds(targetLocation) = True Then
+                Exit Sub
+            End If
 
             For Each wall As Control In wallsList
                 If wall.Location = targetLocation Then
@@ -289,6 +294,9 @@
             avatarPictureBox.Location = New Point(avatarPictureBox.Location.X - cellSize, avatarPictureBox.Location.Y)
         ElseIf e.KeyCode = Keys.D Then
             targetLocation = New Point(avatarPictureBox.Location.X + cellSize, avatarPictureBox.Location.Y)
+            If IsTargetLocationOutsideBounds(targetLocation) = True Then
+                Exit Sub
+            End If
 
             For Each wall As Control In wallsList
                 If wall.Location = targetLocation Then
@@ -301,6 +309,20 @@
 
         CheckIfExitReached(avatarPictureBox)
     End Sub
+
+    Function IsTargetLocationOutsideBounds(targetLocation As Point)
+        Dim minX As Integer = Panel1.Location.X - (cellSize * 2)
+        Dim minY As Integer = Panel1.Location.Y - cellSize
+        Dim maxX As Integer = Panel1.Location.X + Panel1.Width - (cellSize * 2)
+        Dim maxY As Integer = Panel1.Location.Y + Panel1.Height
+
+        If targetLocation.X < minX OrElse targetLocation.X > maxX OrElse targetLocation.Y < minY OrElse targetLocation.Y > maxY Then
+            Return True
+        End If
+
+        Return False
+    End Function
+
 
     Sub CheckIfExitReached(avatarPictureBox)
         If avatarPictureBox.Location = exitCell.Location Then
