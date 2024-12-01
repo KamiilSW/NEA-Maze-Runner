@@ -1,6 +1,6 @@
 ﻿Public Class Form1
     Public gridSize As Integer = 45
-    Public cellSize As Integer = 10
+    Public cellSize As Integer = 15
     Dim counter As Integer = 0
     Dim wallsList As New List(Of PictureBox)
     Dim unvisitedCells As New List(Of PictureBox)
@@ -14,7 +14,7 @@
         Me.Text = "Maze"
         Me.BackColor = Color.White
         Me.KeyPreview = True
-        Panel1.Location = New Point(10, 10)
+        Panel1.Location = New Point(10 + cellSize, 10 + cellSize)
         Panel1.Size = New Size(gridSize * cellSize, gridSize * cellSize)
         Me.Controls.Add(Panel1)
         Dim isAWall As Boolean = True
@@ -65,6 +65,7 @@
 
         startCell = createRandomStartCell(Nothing)
         GenerateMaze(startCell)
+        AddEdgeWalls()
         FixBackground()
         FindExit()
         avatar.AvatarProperties(Panel1, startCell, cellSize)
@@ -168,33 +169,79 @@
         exitCell.BackColor = Color.Yellow
     End Sub
 
-    'Public Sub Form1_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyDown
-    '    Dim avatarPictureBox = avatar.Avatar
-    '    Dim direction As Char
-    '    Dim wall As PictureBox = Nothing
+    Sub AddEdgeWalls()
+        Dim panelWidth As Integer = Panel1.Width
+        Dim panelHeight As Integer = Panel1.Height
+        Dim panelXOffset As Integer = Panel1.Location.X
+        Dim panelYOffset As Integer = Panel1.Location.Y
+        Dim topEdgeHasWalls As Boolean = True
+        Dim bottomEdgeHasWalls As Boolean = True
+        Dim leftEdgeHasWalls As Boolean = True
+        Dim rightEdgeHasWalls As Boolean = True
 
-    '    If avatarPictureBox IsNot Nothing Then
-    '        If e.KeyCode = Keys.W Then
-    '            If CheckIfWallIsInWayOfMovement(e, avatarPictureBox) = True Then
-    '                Exit Sub
-    '            Else
-    '                avatarPictureBox.Location = New Point(avatarPictureBox.Location.X, avatarPictureBox.Location.Y - cellSize)
-    '            End If
+        ' Check for walls along the top and bottom edges
+        For x As Integer = 0 To gridSize - 1
+            Dim topCellIndex As Integer = x
+            Dim bottomCellIndex As Integer = (gridSize - 1) * gridSize + x
 
-    '        ElseIf e.KeyCode = Keys.S Then
-    '            direction = "S"
-    '            avatarPictureBox.Location = New Point(avatarPictureBox.Location.X, avatarPictureBox.Location.Y + cellSize)
-    '        ElseIf e.KeyCode = Keys.A Then
-    '            direction = "A"
-    '            avatarPictureBox.Location = New Point(avatarPictureBox.Location.X - cellSize, avatarPictureBox.Location.Y)
-    '        ElseIf e.KeyCode = Keys.D Then
-    '            direction = "D"
-    '            avatarPictureBox.Location = New Point(avatarPictureBox.Location.X + cellSize, avatarPictureBox.Location.Y)
-    '        End If
-    '    End If
+            If allCells(topCellIndex).BackColor <> Color.DarkSlateGray Then topEdgeHasWalls = False
+            If allCells(bottomCellIndex).BackColor <> Color.DarkSlateGray Then bottomEdgeHasWalls = False
+        Next
 
-    '    CheckIfExitReached(avatarPictureBox)
-    'End Sub
+        ' Check for walls along the left and right edges
+        For y As Integer = 0 To gridSize - 1
+            Dim leftCellIndex As Integer = y * gridSize
+            Dim rightCellIndex As Integer = (y * gridSize) + (gridSize - 1)
+
+            If allCells(leftCellIndex).BackColor <> Color.DarkSlateGray Then leftEdgeHasWalls = False
+            If allCells(rightCellIndex).BackColor <> Color.DarkSlateGray Then rightEdgeHasWalls = False
+        Next
+
+        ' Add missing walls outside the maze
+        If Not topEdgeHasWalls Then
+            For x As Integer = 0 To gridSize - 1
+                Dim wall As New PictureBox()
+                wall.Size = New Size(cellSize, cellSize)
+                wall.Location = New Point(panelXOffset + (x * cellSize), panelYOffset - cellSize) ' Place above the maze
+                wall.BackColor = Color.DarkSlateGray
+                Me.Controls.Add(wall)
+                wallsList.Add(wall)
+            Next
+        End If
+
+        If Not bottomEdgeHasWalls Then
+            For x As Integer = 0 To gridSize - 1
+                Dim wall As New PictureBox()
+                wall.Size = New Size(cellSize, cellSize)
+                wall.Location = New Point(panelXOffset + (x * cellSize), panelYOffset + panelHeight) ' Place below the maze
+                wall.BackColor = Color.DarkSlateGray
+                Me.Controls.Add(wall)
+                wallsList.Add(wall)
+            Next
+        End If
+
+        If Not leftEdgeHasWalls Then
+            For y As Integer = 0 To gridSize - 1
+                Dim wall As New PictureBox()
+                wall.Size = New Size(cellSize, cellSize)
+                wall.Location = New Point(panelXOffset - cellSize, panelYOffset + (y * cellSize)) ' Place to the left of the maze
+                wall.BackColor = Color.DarkSlateGray
+                Me.Controls.Add(wall)
+                wallsList.Add(wall)
+            Next
+        End If
+
+        If Not rightEdgeHasWalls Then
+            For y As Integer = 0 To gridSize - 1
+                Dim wall As New PictureBox()
+                wall.Size = New Size(cellSize, cellSize)
+                wall.Location = New Point(panelXOffset + panelWidth, panelYOffset + (y * cellSize)) ' Place to the right of the maze
+                wall.BackColor = Color.DarkSlateGray
+                Me.Controls.Add(wall)
+                wallsList.Add(wall)
+            Next
+        End If
+    End Sub
 
     Sub CalibrateWallsList()
         wallsList.Clear()
