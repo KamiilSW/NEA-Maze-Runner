@@ -9,6 +9,7 @@
     Dim allCells As New List(Of PictureBox)
     Public startCell As PictureBox = Nothing
     Public avatar As New Avatar()
+    Dim exitCell As PictureBox
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.Text = "Maze"
         Me.BackColor = Color.White
@@ -66,8 +67,8 @@
         GenerateMaze(startCell)
         FixBackground()
         FindExit()
-        FindStart(startCell)
         avatar.AvatarProperties(Panel1, startCell, cellSize)
+        CalibrateWallsList()
     End Sub
 
     Sub GenerateMaze(startCell)
@@ -156,7 +157,6 @@
     End Sub
     Sub FindExit()
         Dim randInt As Integer
-        Dim exitCell As PictureBox
         Dim visitedNeighbours As New List(Of PictureBox)
 
         Do
@@ -167,23 +167,97 @@
 
         exitCell.BackColor = Color.Yellow
     End Sub
-    Sub FindStart(startCell)
-        startCell.BackColor = Color.Yellow
+
+    'Public Sub Form1_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyDown
+    '    Dim avatarPictureBox = avatar.Avatar
+    '    Dim direction As Char
+    '    Dim wall As PictureBox = Nothing
+
+    '    If avatarPictureBox IsNot Nothing Then
+    '        If e.KeyCode = Keys.W Then
+    '            If CheckIfWallIsInWayOfMovement(e, avatarPictureBox) = True Then
+    '                Exit Sub
+    '            Else
+    '                avatarPictureBox.Location = New Point(avatarPictureBox.Location.X, avatarPictureBox.Location.Y - cellSize)
+    '            End If
+
+    '        ElseIf e.KeyCode = Keys.S Then
+    '            direction = "S"
+    '            avatarPictureBox.Location = New Point(avatarPictureBox.Location.X, avatarPictureBox.Location.Y + cellSize)
+    '        ElseIf e.KeyCode = Keys.A Then
+    '            direction = "A"
+    '            avatarPictureBox.Location = New Point(avatarPictureBox.Location.X - cellSize, avatarPictureBox.Location.Y)
+    '        ElseIf e.KeyCode = Keys.D Then
+    '            direction = "D"
+    '            avatarPictureBox.Location = New Point(avatarPictureBox.Location.X + cellSize, avatarPictureBox.Location.Y)
+    '        End If
+    '    End If
+
+    '    CheckIfExitReached(avatarPictureBox)
+    'End Sub
+
+    Sub CalibrateWallsList()
+        wallsList.Clear()
+        For Each cell In allCells
+            If cell.BackColor = Color.DarkSlateGray Then
+                wallsList.Add(cell)
+            End If
+        Next
     End Sub
 
     Public Sub Form1_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyDown
-        Dim avatarPictureBox = avatar.Avatar ' Access the PictureBox
+        Dim avatarPictureBox = avatar.Avatar
+        Dim targetLocation = Nothing
 
-        If avatarPictureBox IsNot Nothing Then
-            If e.KeyCode = Keys.W Then
-                avatarPictureBox.Location = New Point(avatarPictureBox.Location.X, avatarPictureBox.Location.Y - cellSize)
-            ElseIf e.KeyCode = Keys.S Then
-                avatarPictureBox.Location = New Point(avatarPictureBox.Location.X, avatarPictureBox.Location.Y + cellSize)
-            ElseIf e.KeyCode = Keys.A Then
-                avatarPictureBox.Location = New Point(avatarPictureBox.Location.X - cellSize, avatarPictureBox.Location.Y)
-            ElseIf e.KeyCode = Keys.D Then
-                avatarPictureBox.Location = New Point(avatarPictureBox.Location.X + cellSize, avatarPictureBox.Location.Y)
-            End If
+        If e.KeyCode = Keys.W Then
+            targetLocation = New Point(avatarPictureBox.Location.X, avatarPictureBox.Location.Y - cellSize)
+
+            For Each wall As Control In wallsList
+                If wall.Location = targetLocation Then
+                    Exit Sub
+                End If
+            Next
+
+            avatarPictureBox.Location = New Point(avatarPictureBox.Location.X, avatarPictureBox.Location.Y - cellSize)
+        ElseIf e.KeyCode = Keys.S Then
+            targetLocation = New Point(avatarPictureBox.Location.X, avatarPictureBox.Location.Y + cellSize)
+
+            For Each wall As Control In wallsList
+                If wall.Location = targetLocation Then
+                    Exit Sub
+                End If
+            Next
+
+            avatarPictureBox.Location = New Point(avatarPictureBox.Location.X, avatarPictureBox.Location.Y + cellSize)
+        ElseIf e.KeyCode = Keys.A Then
+            targetLocation = New Point(avatarPictureBox.Location.X - cellSize, avatarPictureBox.Location.Y)
+
+
+            For Each wall As Control In wallsList
+                If wall.Location = targetLocation Then
+                    Exit Sub
+                End If
+            Next
+
+            avatarPictureBox.Location = New Point(avatarPictureBox.Location.X - cellSize, avatarPictureBox.Location.Y)
+        ElseIf e.KeyCode = Keys.D Then
+            targetLocation = New Point(avatarPictureBox.Location.X + cellSize, avatarPictureBox.Location.Y)
+
+            For Each wall As Control In wallsList
+                If wall.Location = targetLocation Then
+                    Exit Sub
+                End If
+            Next
+
+            avatarPictureBox.Location = New Point(avatarPictureBox.Location.X + cellSize, avatarPictureBox.Location.Y)
+        End If
+
+        CheckIfExitReached(avatarPictureBox)
+    End Sub
+
+    Sub CheckIfExitReached(avatarPictureBox)
+        If avatarPictureBox.Location = exitCell.Location Then
+            MessageBox.Show("You have won.")
         End If
     End Sub
 End Class

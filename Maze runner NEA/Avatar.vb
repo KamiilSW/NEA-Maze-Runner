@@ -1,5 +1,4 @@
 ﻿Imports System.Runtime.CompilerServices
-
 Public Class Avatar
     Public Avatar As PictureBox
 
