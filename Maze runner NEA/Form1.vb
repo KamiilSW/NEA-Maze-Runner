@@ -1,6 +1,6 @@
 ﻿Public Class Form1
-    Public gridSize As Integer = 45
-    Public cellSize As Integer = 15
+    Public gridSize As Integer = 55
+    Public cellSize As Integer = 10
     Dim counter As Integer = 0
     Dim wallsList As New List(Of PictureBox)
     Dim unvisitedCells As New List(Of PictureBox)
@@ -10,6 +10,8 @@
     Public startCell As PictureBox = Nothing
     Public avatar As New Avatar()
     Dim exitCell As PictureBox
+    Dim borderWallsList As New List(Of PictureBox)
+    Public startingCell As PictureBox = Nothing
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.Text = "Maze"
         Me.BackColor = Color.Black
@@ -68,6 +70,7 @@
         AddEdgeWalls()
         FixBackground()
         FindExit()
+        FindStartingCell()
         avatar.AvatarProperties(Panel1, startCell, cellSize)
         CalibrateWallsList()
     End Sub
@@ -169,6 +172,15 @@
         exitCell.BackColor = Color.Yellow
     End Sub
 
+    Sub FindStartingCell()
+        Dim random As New Random()
+
+        Do
+            Dim randInt As Integer = random.Next(allCells.Count)
+            startingCell = allCells.Item(randInt)
+        Loop Until startingCell.BackColor = Color.Black
+    End Sub
+
     Sub AddEdgeWalls()
         Dim panelWidth As Integer = Panel1.Width
         Dim panelHeight As Integer = Panel1.Height
@@ -203,6 +215,7 @@
                 wall.BackColor = Color.DarkSlateGray
                 Me.Controls.Add(wall)
                 wallsList.Add(wall)
+                borderWallsList.Add(wall)
             Next
         End If
 
@@ -214,6 +227,7 @@
                 wall.BackColor = Color.DarkSlateGray
                 Me.Controls.Add(wall)
                 wallsList.Add(wall)
+                borderWallsList.Add(wall)
             Next
         End If
 
@@ -225,6 +239,7 @@
                 wall.BackColor = Color.DarkSlateGray
                 Me.Controls.Add(wall)
                 wallsList.Add(wall)
+                borderWallsList.Add(wall)
             Next
         End If
 
@@ -236,6 +251,7 @@
                 wall.BackColor = Color.DarkSlateGray
                 Me.Controls.Add(wall)
                 wallsList.Add(wall)
+                borderWallsList.Add(wall)
             Next
         End If
     End Sub
@@ -312,7 +328,7 @@
 
     Function IsTargetLocationOutsideBounds(targetLocation As Point)
         Dim minX As Integer = Panel1.Location.X - (cellSize * 2)
-        Dim minY As Integer = Panel1.Location.Y - cellSize
+        Dim minY As Integer = Panel1.Location.Y - (cellSize * 2)
         Dim maxX As Integer = Panel1.Location.X + Panel1.Width - (cellSize * 2)
         Dim maxY As Integer = Panel1.Location.Y + Panel1.Height
 
@@ -322,7 +338,6 @@
 
         Return False
     End Function
-
 
     Sub CheckIfExitReached(avatarPictureBox)
         If avatarPictureBox.Location = exitCell.Location Then
