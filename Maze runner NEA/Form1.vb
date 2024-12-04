@@ -1,5 +1,5 @@
 ﻿Public Class Form1
-    Public gridSize As Integer = 55
+    Public gridSize As Integer = 25
     Public cellSize As Integer = 10
     Dim counter As Integer = 0
     Dim wallsList As New List(Of PictureBox)
@@ -10,8 +10,12 @@
     Public startCell As PictureBox = Nothing
     Public avatar As New Avatar()
     Dim exitCell As PictureBox
-    Dim borderWallsList As New List(Of PictureBox)
+    Dim allWallsList As New List(Of PictureBox)
     Public startingCell As PictureBox = Nothing
+    Dim topEdgeHasWalls As Boolean = True
+    Dim bottomEdgeHasWalls As Boolean = True
+    Dim leftEdgeHasWalls As Boolean = True
+    Dim rightEdgeHasWalls As Boolean = True
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.Text = "Maze"
         Me.BackColor = Color.Black
@@ -21,12 +25,10 @@
         Me.Controls.Add(Panel1)
         Dim isAWall As Boolean = True
 
-        'Creates the grid.
         For i As Integer = 0 To gridSize - 1
             For j As Integer = 0 To gridSize - 1
                 Dim cell As New PictureBox()
 
-                ' Sets the cell's properties
                 cell.Size = New Size(cellSize, cellSize)
                 cell.Location = New Point(j * cellSize, i * cellSize)
                 Panel1.Controls.Add(cell)
@@ -47,7 +49,6 @@
                     unvisitedCells.Add(cell)
                 End If
 
-                ' Add cells on the edge to the list
                 If i = 0 OrElse i = gridSize - 1 OrElse j = 0 OrElse j = gridSize - 1 Then
                     CellsOnEdge.Add(cell)
                     cell.BackColor = Color.DarkSlateGray
@@ -71,8 +72,9 @@
         FixBackground()
         FindExit()
         FindStartingCell()
-        avatar.AvatarProperties(Panel1, startCell, cellSize)
+        CalibrateAllWallsList()
         CalibrateWallsList()
+        avatar.AvatarProperties(Panel1, startCell, cellSize)
     End Sub
 
     Sub GenerateMaze(startCell)
@@ -186,10 +188,6 @@
         Dim panelHeight As Integer = Panel1.Height
         Dim panelXOffset As Integer = Panel1.Location.X
         Dim panelYOffset As Integer = Panel1.Location.Y
-        Dim topEdgeHasWalls As Boolean = True
-        Dim bottomEdgeHasWalls As Boolean = True
-        Dim leftEdgeHasWalls As Boolean = True
-        Dim rightEdgeHasWalls As Boolean = True
 
         For x As Integer = 0 To gridSize - 1
             Dim topCellIndex As Integer = x
@@ -210,57 +208,71 @@
         If Not topEdgeHasWalls Then
             For x As Integer = 0 To gridSize - 1
                 Dim wall As New PictureBox()
+                Me.Controls.Add(wall)
                 wall.Size = New Size(cellSize, cellSize)
                 wall.Location = New Point(panelXOffset + (x * cellSize), panelYOffset - cellSize)
                 wall.BackColor = Color.DarkSlateGray
-                Me.Controls.Add(wall)
                 wallsList.Add(wall)
-                borderWallsList.Add(wall)
+                allWallsList.Add(wall)
+                allCells.Add(wall)
             Next
         End If
 
         If Not bottomEdgeHasWalls Then
             For x As Integer = 0 To gridSize - 1
                 Dim wall As New PictureBox()
+                Me.Controls.Add(wall)
                 wall.Size = New Size(cellSize, cellSize)
                 wall.Location = New Point(panelXOffset + (x * cellSize), panelYOffset + panelHeight)
                 wall.BackColor = Color.DarkSlateGray
-                Me.Controls.Add(wall)
                 wallsList.Add(wall)
-                borderWallsList.Add(wall)
+                allWallsList.Add(wall)
+                allCells.Add(wall)
             Next
         End If
 
         If Not leftEdgeHasWalls Then
             For y As Integer = 0 To gridSize - 1
                 Dim wall As New PictureBox()
+                Me.Controls.Add(wall)
                 wall.Size = New Size(cellSize, cellSize)
                 wall.Location = New Point(panelXOffset - cellSize, panelYOffset + (y * cellSize))
                 wall.BackColor = Color.DarkSlateGray
-                Me.Controls.Add(wall)
                 wallsList.Add(wall)
-                borderWallsList.Add(wall)
+                allWallsList.Add(wall)
+                allCells.Add(wall)
             Next
         End If
 
         If Not rightEdgeHasWalls Then
             For y As Integer = 0 To gridSize - 1
                 Dim wall As New PictureBox()
+                Me.Controls.Add(wall)
                 wall.Size = New Size(cellSize, cellSize)
                 wall.Location = New Point(panelXOffset + panelWidth, panelYOffset + (y * cellSize))
                 wall.BackColor = Color.DarkSlateGray
-                Me.Controls.Add(wall)
                 wallsList.Add(wall)
-                borderWallsList.Add(wall)
+                allWallsList.Add(wall)
+                allCells.Add(wall)
             Next
         End If
     End Sub
 
-    Sub CalibrateWallsList()
-        wallsList.Clear()
+    Sub CalibrateAllWallsList()
+        allWallsList.Clear()
         For Each cell In allCells
             If cell.BackColor = Color.DarkSlateGray Then
-                wallsList.Add(cell)
+                allWallsList.Add(cell)
+            End If
+        Next
+    End Sub
+
+    Sub CalibrateWallsList()
+        wallsList.Clear()
+
+        For Each cell In allCells
+            If cell.BackColor = Color.DarkSlateGray Then
+                allWallsList.Add(cell)
             End If
         Next
     End Sub
@@ -271,7 +283,7 @@
 
         If e.KeyCode = Keys.W Then
             targetLocation = New Point(avatarPictureBox.Location.X, avatarPictureBox.Location.Y - cellSize)
-            If IsTargetLocationOutsideBounds(targetLocation) = True Then
+            If ThereIsAWallInTheWay(targetLocation) = True Then
                 Exit Sub
             End If
 
@@ -284,7 +296,7 @@
             avatarPictureBox.Location = New Point(avatarPictureBox.Location.X, avatarPictureBox.Location.Y - cellSize)
         ElseIf e.KeyCode = Keys.S Then
             targetLocation = New Point(avatarPictureBox.Location.X, avatarPictureBox.Location.Y + cellSize)
-            If IsTargetLocationOutsideBounds(targetLocation) = True Then
+            If ThereIsAWallInTheWay(targetLocation) = True Then
                 Exit Sub
             End If
 
@@ -297,7 +309,7 @@
             avatarPictureBox.Location = New Point(avatarPictureBox.Location.X, avatarPictureBox.Location.Y + cellSize)
         ElseIf e.KeyCode = Keys.A Then
             targetLocation = New Point(avatarPictureBox.Location.X - cellSize, avatarPictureBox.Location.Y)
-            If IsTargetLocationOutsideBounds(targetLocation) = True Then
+            If ThereIsAWallInTheWay(targetLocation) = True Then
                 Exit Sub
             End If
 
@@ -310,7 +322,7 @@
             avatarPictureBox.Location = New Point(avatarPictureBox.Location.X - cellSize, avatarPictureBox.Location.Y)
         ElseIf e.KeyCode = Keys.D Then
             targetLocation = New Point(avatarPictureBox.Location.X + cellSize, avatarPictureBox.Location.Y)
-            If IsTargetLocationOutsideBounds(targetLocation) = True Then
+            If ThereIsAWallInTheWay(targetLocation) = True Then
                 Exit Sub
             End If
 
@@ -326,15 +338,12 @@
         CheckIfExitReached(avatarPictureBox)
     End Sub
 
-    Function IsTargetLocationOutsideBounds(targetLocation As Point)
-        Dim minX As Integer = Panel1.Location.X - (cellSize * 2)
-        Dim minY As Integer = Panel1.Location.Y - (cellSize * 2)
-        Dim maxX As Integer = Panel1.Location.X + Panel1.Width - (cellSize * 2)
-        Dim maxY As Integer = Panel1.Location.Y + Panel1.Height
-
-        If targetLocation.X < minX OrElse targetLocation.X > maxX OrElse targetLocation.Y < minY OrElse targetLocation.Y > maxY Then
-            Return True
-        End If
+    Function ThereIsAWallInTheWay(targetLocation)
+        For Each cell In allWallsList
+            If cell.BackColor = Color.DarkSlateGray And cell.Location = targetLocation Then
+                Return True
+            End If
+        Next
 
         Return False
     End Function
