@@ -1,5 +1,5 @@
 ﻿Public Class Form1
-    Public gridSize As Integer = 25
+    Public gridSize As Integer = 45
     Public cellSize As Integer = 10
     Dim counter As Integer = 0
     Dim wallsList As New List(Of PictureBox)
@@ -10,12 +10,13 @@
     Public startCell As PictureBox = Nothing
     Public avatar As New Avatar()
     Dim exitCell As PictureBox
-    Dim allWallsList As New List(Of PictureBox)
     Public startingCell As PictureBox = Nothing
     Dim topEdgeHasWalls As Boolean = True
     Dim bottomEdgeHasWalls As Boolean = True
     Dim leftEdgeHasWalls As Boolean = True
     Dim rightEdgeHasWalls As Boolean = True
+    Dim borderWallsListX As New List(Of Integer)
+    Dim borderWallsListY As New List(Of Integer)
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.Text = "Maze"
         Me.BackColor = Color.Black
@@ -72,7 +73,6 @@
         FixBackground()
         FindExit()
         FindStartingCell()
-        CalibrateAllWallsList()
         CalibrateWallsList()
         avatar.AvatarProperties(Panel1, startCell, cellSize)
     End Sub
@@ -212,9 +212,8 @@
                 wall.Size = New Size(cellSize, cellSize)
                 wall.Location = New Point(panelXOffset + (x * cellSize), panelYOffset - cellSize)
                 wall.BackColor = Color.DarkSlateGray
-                wallsList.Add(wall)
-                allWallsList.Add(wall)
-                allCells.Add(wall)
+                borderWallsListX.Add(wall.Location.X)
+                borderWallsListY.Add(wall.Location.Y)
             Next
         End If
 
@@ -225,9 +224,8 @@
                 wall.Size = New Size(cellSize, cellSize)
                 wall.Location = New Point(panelXOffset + (x * cellSize), panelYOffset + panelHeight)
                 wall.BackColor = Color.DarkSlateGray
-                wallsList.Add(wall)
-                allWallsList.Add(wall)
-                allCells.Add(wall)
+                borderWallsListX.Add(wall.Location.X)
+                borderWallsListY.Add(wall.Location.Y)
             Next
         End If
 
@@ -238,9 +236,8 @@
                 wall.Size = New Size(cellSize, cellSize)
                 wall.Location = New Point(panelXOffset - cellSize, panelYOffset + (y * cellSize))
                 wall.BackColor = Color.DarkSlateGray
-                wallsList.Add(wall)
-                allWallsList.Add(wall)
-                allCells.Add(wall)
+                borderWallsListX.Add(wall.Location.X)
+                borderWallsListY.Add(wall.Location.Y)
             Next
         End If
 
@@ -251,20 +248,10 @@
                 wall.Size = New Size(cellSize, cellSize)
                 wall.Location = New Point(panelXOffset + panelWidth, panelYOffset + (y * cellSize))
                 wall.BackColor = Color.DarkSlateGray
-                wallsList.Add(wall)
-                allWallsList.Add(wall)
-                allCells.Add(wall)
+                borderWallsListX.Add(wall.Location.X)
+                borderWallsListY.Add(wall.Location.Y)
             Next
         End If
-    End Sub
-
-    Sub CalibrateAllWallsList()
-        allWallsList.Clear()
-        For Each cell In allCells
-            If cell.BackColor = Color.DarkSlateGray Then
-                allWallsList.Add(cell)
-            End If
-        Next
     End Sub
 
     Sub CalibrateWallsList()
@@ -272,7 +259,7 @@
 
         For Each cell In allCells
             If cell.BackColor = Color.DarkSlateGray Then
-                allWallsList.Add(cell)
+                wallsList.Add(cell)
             End If
         Next
     End Sub
@@ -283,9 +270,10 @@
 
         If e.KeyCode = Keys.W Then
             targetLocation = New Point(avatarPictureBox.Location.X, avatarPictureBox.Location.Y - cellSize)
-            If ThereIsAWallInTheWay(targetLocation) = True Then
-                Exit Sub
+            If ThereIsABorderWallInTheWay(targetLocation) Then
+                Exit Sub ' Block movement if the target location is out of bounds
             End If
+
 
             For Each wall As Control In wallsList
                 If wall.Location = targetLocation Then
@@ -296,9 +284,10 @@
             avatarPictureBox.Location = New Point(avatarPictureBox.Location.X, avatarPictureBox.Location.Y - cellSize)
         ElseIf e.KeyCode = Keys.S Then
             targetLocation = New Point(avatarPictureBox.Location.X, avatarPictureBox.Location.Y + cellSize)
-            If ThereIsAWallInTheWay(targetLocation) = True Then
-                Exit Sub
+            If ThereIsABorderWallInTheWay(targetLocation) Then
+                Exit Sub ' Block movement if the target location is out of bounds
             End If
+
 
             For Each wall As Control In wallsList
                 If wall.Location = targetLocation Then
@@ -309,9 +298,10 @@
             avatarPictureBox.Location = New Point(avatarPictureBox.Location.X, avatarPictureBox.Location.Y + cellSize)
         ElseIf e.KeyCode = Keys.A Then
             targetLocation = New Point(avatarPictureBox.Location.X - cellSize, avatarPictureBox.Location.Y)
-            If ThereIsAWallInTheWay(targetLocation) = True Then
-                Exit Sub
+            If ThereIsABorderWallInTheWay(targetLocation) Then
+                Exit Sub ' Block movement if the target location is out of bounds
             End If
+
 
             For Each wall As Control In wallsList
                 If wall.Location = targetLocation Then
@@ -322,9 +312,10 @@
             avatarPictureBox.Location = New Point(avatarPictureBox.Location.X - cellSize, avatarPictureBox.Location.Y)
         ElseIf e.KeyCode = Keys.D Then
             targetLocation = New Point(avatarPictureBox.Location.X + cellSize, avatarPictureBox.Location.Y)
-            If ThereIsAWallInTheWay(targetLocation) = True Then
-                Exit Sub
+            If ThereIsABorderWallInTheWay(targetLocation) Then
+                Exit Sub ' Block movement if the target location is out of bounds
             End If
+
 
             For Each wall As Control In wallsList
                 If wall.Location = targetLocation Then
@@ -338,9 +329,37 @@
         CheckIfExitReached(avatarPictureBox)
     End Sub
 
-    Function ThereIsAWallInTheWay(targetLocation)
-        For Each cell In allWallsList
-            If cell.BackColor = Color.DarkSlateGray And cell.Location = targetLocation Then
+    Function ThereIsABorderWallInTheWay(targetLocation As Point) As Boolean
+        'Dim panelTop As Integer = Panel1.Location.Y ' Adjust for top border
+        'Dim panelBottom As Integer = Panel1.Location.Y + (gridSize * cellSize) ' Adjust for bottom border
+        'Dim panelLeft As Integer = Panel1.Location.X ' Adjust for left border
+        'Dim panelRight As Integer = Panel1.Location.X + (gridSize * cellSize) ' Adjust for right border
+
+        'If topEdgeHasWalls = False Then
+        '    panelTop = 10 + cellSize
+        '    panelBottom = (cellSize * gridSize) + cellSize + 10
+        '    panelLeft = 10
+        '    panelRight = (cellSize * gridSize) + (2 * cellSize) + 10
+        'ElseIf rightEdgeHasWalls = False Then
+        '    panelTop = 10
+        '    panelBottom = (gridSize * cellSize) + (2 * cellSize) + 10
+        '    panelLeft = 10 + cellSize
+        '    panelRight = (cellSize * gridSize) + cellSize + 10
+        'End If
+
+        '' Check if the target location is outside the extended panel bounds
+        'If targetLocation.Y = panelTop OrElse targetLocation.Y = panelBottom Then
+        '    Return True ' Target location is outside vertical bounds
+        'End If
+
+        'If targetLocation.X = panelLeft OrElse targetLocation.X = panelRight Then
+        '    Return True ' Target location is outside horizontal bounds
+        'End If
+
+        'Return False ' Target location is within bounds
+
+        For i = 0 To borderWallsListX.Count - 1
+            If targetLocation = New Point(borderWallsListX.Item(i) - Panel1.Location.X, borderWallsListY.Item(i) - Panel1.Location.Y) Then
                 Return True
             End If
         Next
