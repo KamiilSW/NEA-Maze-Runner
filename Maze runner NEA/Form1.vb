@@ -330,34 +330,6 @@
     End Sub
 
     Function ThereIsABorderWallInTheWay(targetLocation As Point) As Boolean
-        'Dim panelTop As Integer = Panel1.Location.Y ' Adjust for top border
-        'Dim panelBottom As Integer = Panel1.Location.Y + (gridSize * cellSize) ' Adjust for bottom border
-        'Dim panelLeft As Integer = Panel1.Location.X ' Adjust for left border
-        'Dim panelRight As Integer = Panel1.Location.X + (gridSize * cellSize) ' Adjust for right border
-
-        'If topEdgeHasWalls = False Then
-        '    panelTop = 10 + cellSize
-        '    panelBottom = (cellSize * gridSize) + cellSize + 10
-        '    panelLeft = 10
-        '    panelRight = (cellSize * gridSize) + (2 * cellSize) + 10
-        'ElseIf rightEdgeHasWalls = False Then
-        '    panelTop = 10
-        '    panelBottom = (gridSize * cellSize) + (2 * cellSize) + 10
-        '    panelLeft = 10 + cellSize
-        '    panelRight = (cellSize * gridSize) + cellSize + 10
-        'End If
-
-        '' Check if the target location is outside the extended panel bounds
-        'If targetLocation.Y = panelTop OrElse targetLocation.Y = panelBottom Then
-        '    Return True ' Target location is outside vertical bounds
-        'End If
-
-        'If targetLocation.X = panelLeft OrElse targetLocation.X = panelRight Then
-        '    Return True ' Target location is outside horizontal bounds
-        'End If
-
-        'Return False ' Target location is within bounds
-
         For i = 0 To borderWallsListX.Count - 1
             If targetLocation = New Point(borderWallsListX.Item(i) - Panel1.Location.X, borderWallsListY.Item(i) - Panel1.Location.Y) Then
                 Return True
