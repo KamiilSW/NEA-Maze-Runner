@@ -7,10 +7,10 @@ Public Class Avatar
     End Sub
 
     Public Sub AvatarProperties(Panel1, startingCell, cellSize)
-        Form1.Panel1.Controls.Add(Avatar)
-        Avatar.Location = Form1.startingCell.Location
+        MazeForm.Panel1.Controls.Add(Avatar)
+        Avatar.Location = MazeForm.startingCell.Location
         Avatar.BackColor = Color.Purple
         Avatar.BringToFront()
-        Avatar.Size = New Point(Form1.cellSize, Form1.cellSize)
+        Avatar.Size = New Point(MazeForm.cellSize, MazeForm.cellSize)
     End Sub
 End Class

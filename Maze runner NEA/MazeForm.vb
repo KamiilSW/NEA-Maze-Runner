@@ -1,5 +1,5 @@
-﻿Public Class Form1
-    Public gridSize As Integer = 45
+﻿Public Class MazeForm
+    Public gridSize As Integer = 25
     Public cellSize As Integer = 10
     Dim counter As Integer = 0
     Dim wallsList As New List(Of PictureBox)
@@ -17,7 +17,8 @@
     Dim rightEdgeHasWalls As Boolean = True
     Dim borderWallsListX As New List(Of Integer)
     Dim borderWallsListY As New List(Of Integer)
-    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Private Sub MazeForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Threading.Thread.Sleep(1000)
         Me.Text = "Maze"
         Me.BackColor = Color.Black
         Me.KeyPreview = True
@@ -193,16 +194,24 @@
             Dim topCellIndex As Integer = x
             Dim bottomCellIndex As Integer = (gridSize - 1) * gridSize + x
 
-            If allCells(topCellIndex).BackColor <> Color.DarkSlateGray Then topEdgeHasWalls = False
-            If allCells(bottomCellIndex).BackColor <> Color.DarkSlateGray Then bottomEdgeHasWalls = False
+            If allCells(topCellIndex).BackColor <> Color.DarkSlateGray Then
+                topEdgeHasWalls = False
+            End If
+            If allCells(bottomCellIndex).BackColor <> Color.DarkSlateGray Then
+                bottomEdgeHasWalls = False
+            End If
         Next
 
         For y As Integer = 0 To gridSize - 1
             Dim leftCellIndex As Integer = y * gridSize
             Dim rightCellIndex As Integer = (y * gridSize) + (gridSize - 1)
 
-            If allCells(leftCellIndex).BackColor <> Color.DarkSlateGray Then leftEdgeHasWalls = False
-            If allCells(rightCellIndex).BackColor <> Color.DarkSlateGray Then rightEdgeHasWalls = False
+            If allCells(leftCellIndex).BackColor <> Color.DarkSlateGray Then
+                leftEdgeHasWalls = False
+            End If
+            If allCells(rightCellIndex).BackColor <> Color.DarkSlateGray Then
+                rightEdgeHasWalls = False
+            End If
         Next
 
         If Not topEdgeHasWalls Then
@@ -264,14 +273,14 @@
         Next
     End Sub
 
-    Public Sub Form1_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyDown
+    Public Sub MazeForm_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyDown
         Dim avatarPictureBox = avatar.Avatar
         Dim targetLocation = Nothing
 
         If e.KeyCode = Keys.W Then
             targetLocation = New Point(avatarPictureBox.Location.X, avatarPictureBox.Location.Y - cellSize)
             If ThereIsABorderWallInTheWay(targetLocation) Then
-                Exit Sub ' Block movement if the target location is out of bounds
+                Exit Sub
             End If
 
 
@@ -285,7 +294,7 @@
         ElseIf e.KeyCode = Keys.S Then
             targetLocation = New Point(avatarPictureBox.Location.X, avatarPictureBox.Location.Y + cellSize)
             If ThereIsABorderWallInTheWay(targetLocation) Then
-                Exit Sub ' Block movement if the target location is out of bounds
+                Exit Sub
             End If
 
 
@@ -299,7 +308,7 @@
         ElseIf e.KeyCode = Keys.A Then
             targetLocation = New Point(avatarPictureBox.Location.X - cellSize, avatarPictureBox.Location.Y)
             If ThereIsABorderWallInTheWay(targetLocation) Then
-                Exit Sub ' Block movement if the target location is out of bounds
+                Exit Sub
             End If
 
 
@@ -313,7 +322,7 @@
         ElseIf e.KeyCode = Keys.D Then
             targetLocation = New Point(avatarPictureBox.Location.X + cellSize, avatarPictureBox.Location.Y)
             If ThereIsABorderWallInTheWay(targetLocation) Then
-                Exit Sub ' Block movement if the target location is out of bounds
+                Exit Sub
             End If
 
 
@@ -334,6 +343,7 @@
         For i = 0 To borderWallsListX.Count - 1
             If targetLocation = New Point(borderWallsListX.Item(i) - Panel1.Location.X, borderWallsListY.Item(i) - Panel1.Location.Y) Then
                 Return True
+                Exit Function
             End If
         Next
 
@@ -350,6 +360,7 @@
         For Each cell In allCells
             If cell.Location = avatarPictureBox.Location Then
                 cell.BackColor = Color.Pink
+                Exit For
             End If
         Next
     End Sub

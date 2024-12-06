@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
-Partial Class Form1
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+Partial Class MenuForm
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
-    <System.Diagnostics.DebuggerNonUserCode()>
+    <System.Diagnostics.DebuggerNonUserCode()> _
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,29 +20,31 @@ Partial Class Form1
     'NOTE: The following procedure is required by the Windows Form Designer
     'It can be modified using the Windows Form Designer.  
     'Do not modify it using the code editor.
-    <System.Diagnostics.DebuggerStepThrough()>
+    <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Panel1 = New Panel()
+        Button1 = New Button()
         SuspendLayout()
         ' 
-        ' Panel1
+        ' Button1
         ' 
-        Panel1.Location = New Point(12, 12)
-        Panel1.Name = "Panel1"
-        Panel1.Size = New Size(250, 125)
-        Panel1.TabIndex = 0
+        Button1.Location = New Point(127, 92)
+        Button1.Name = "Button1"
+        Button1.Size = New Size(94, 29)
+        Button1.TabIndex = 0
+        Button1.Text = "Easy mode"
+        Button1.UseVisualStyleBackColor = True
         ' 
-        ' Form1
+        ' Form2
         ' 
         AutoScaleDimensions = New SizeF(8F, 20F)
         AutoScaleMode = AutoScaleMode.Font
-        ClientSize = New Size(800, 450)
-        Controls.Add(Panel1)
-        Name = "Form1"
-        Text = "Form1"
+        BackColor = SystemColors.ActiveCaptionText
+        ClientSize = New Size(953, 554)
+        Controls.Add(Button1)
+        Name = "Form2"
+        Text = "Form2"
         ResumeLayout(False)
     End Sub
 
-    Public WithEvents Panel1 As New System.Windows.Forms.Panel
-
+    Friend WithEvents Button1 As Button
 End Class
