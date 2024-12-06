@@ -327,6 +327,7 @@
         End If
 
         CheckIfExitReached(avatarPictureBox)
+        CreateTrail(avatarPictureBox)
     End Sub
 
     Function ThereIsABorderWallInTheWay(targetLocation As Point) As Boolean
@@ -343,5 +344,13 @@
         If avatarPictureBox.Location = exitCell.Location Then
             MessageBox.Show("You have won.")
         End If
+    End Sub
+
+    Sub CreateTrail(avatarPictureBox)
+        For Each cell In allCells
+            If cell.Location = avatarPictureBox.Location Then
+                cell.BackColor = Color.Pink
+            End If
+        Next
     End Sub
 End Class
