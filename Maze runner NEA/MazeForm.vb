@@ -7,18 +7,17 @@
     Dim Stack As New Stack(Of PictureBox)
     Dim CellsOnEdge As New List(Of PictureBox)
     Dim allCells As New List(Of PictureBox)
-    Public startCell As PictureBox = Nothing
+    Public pathCell As PictureBox = Nothing
     Public avatar As New Avatar()
     Dim exitCell As PictureBox
-    Public startingCell As PictureBox = Nothing
+    Public startCell As PictureBox = Nothing
     Dim topEdgeHasWalls As Boolean = True
     Dim bottomEdgeHasWalls As Boolean = True
     Dim leftEdgeHasWalls As Boolean = True
     Dim rightEdgeHasWalls As Boolean = True
     Dim borderWallsListX As New List(Of Integer)
     Dim borderWallsListY As New List(Of Integer)
-    Private Sub MazeForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        Threading.Thread.Sleep(1000)
+    Private Sub MazeForm_Shown(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.Text = "Maze"
         Me.BackColor = Color.Black
         Me.KeyPreview = True
@@ -68,14 +67,14 @@
             Next
         Next
 
-        startCell = createRandomStartCell(Nothing)
-        GenerateMaze(startCell)
+        pathCell = createRandomPathCell(Nothing)
+        GenerateMaze(pathCell)
         AddEdgeWalls()
         FixBackground()
         FindExit()
-        FindStartingCell()
+        FindStartCell()
         CalibrateWallsList()
-        avatar.AvatarProperties(Panel1, startCell, cellSize)
+        avatar.AvatarProperties(Panel1, startCell)
     End Sub
 
     Sub GenerateMaze(startCell)
@@ -107,7 +106,7 @@
         BreakWallBetween(previousCell, currentCell)
         Stack.Push(currentCell)
     End Sub
-    Function createRandomStartCell(currentCell)
+    Function createRandomPathCell(currentCell)
         Dim randInt As Integer = random.Next(unvisitedCells.Count)
 
         currentCell = unvisitedCells.Item(randInt)
@@ -175,13 +174,13 @@
         exitCell.BackColor = Color.Yellow
     End Sub
 
-    Sub FindStartingCell()
+    Sub FindStartCell()
         Dim random As New Random()
 
         Do
             Dim randInt As Integer = random.Next(allCells.Count)
-            startingCell = allCells.Item(randInt)
-        Loop Until startingCell.BackColor = Color.Black
+            startCell = allCells.Item(randInt)
+        Loop Until startCell.BackColor = Color.Black
     End Sub
 
     Sub AddEdgeWalls()
