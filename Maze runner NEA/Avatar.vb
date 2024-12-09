@@ -6,11 +6,11 @@ Public Class Avatar
         Avatar = New PictureBox()
     End Sub
 
-    Public Sub AvatarProperties(Panel1, startCell)
+    Public Sub AvatarInitilization(Panel1, startCell, cellSize)
         Panel1.Controls.Add(Avatar)
         Avatar.Location = startCell.Location
         Avatar.BackColor = Color.Purple
         Avatar.BringToFront()
-        Avatar.Size = New Point(MazeForm.cellSize, MazeForm.cellSize)
+        Avatar.Size = New Point(cellSize, cellSize)
     End Sub
 End Class

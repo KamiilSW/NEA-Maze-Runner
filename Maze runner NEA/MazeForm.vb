@@ -1,5 +1,5 @@
 ﻿Public Class MazeForm
-    Public gridSize As Integer = 25
+    Public gridSize As Integer
     Public cellSize As Integer = 10
     Dim counter As Integer = 0
     Dim wallsList As New List(Of PictureBox)
@@ -74,7 +74,7 @@
         FindExit()
         FindStartCell()
         CalibrateWallsList()
-        avatar.AvatarProperties(Panel1, startCell)
+        avatar.AvatarInitilization(Panel1, startCell, cellSize)
     End Sub
 
     Sub GenerateMaze(startCell)
