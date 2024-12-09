@@ -23,6 +23,7 @@
         Me.WindowState = FormWindowState.Maximized
         Me.BackColor = Color.Black
         Me.KeyPreview = True
+
         If gridSize = 21 Then
             cellSize = 35
         ElseIf gridSize = 31 Then
@@ -33,7 +34,7 @@
             cellSize = 16
         End If
 
-        Panel1.Location = New Point(10 + cellSize, 10 + cellSize)
+        Panel1.Location = New Point(Me.Width / 4, 10 + cellSize)
         Panel1.Size = New Size(gridSize * cellSize, gridSize * cellSize)
         Me.Controls.Add(Panel1)
         Dim isAWall As Boolean = True
