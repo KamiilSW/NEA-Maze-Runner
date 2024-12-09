@@ -1,6 +1,6 @@
 ﻿Public Class MazeForm
     Public gridSize As Integer
-    Public cellSize As Integer = 10
+    Public cellSize As Integer
     Dim counter As Integer = 0
     Dim wallsList As New List(Of PictureBox)
     Dim unvisitedCells As New List(Of PictureBox)
@@ -17,10 +17,22 @@
     Dim rightEdgeHasWalls As Boolean = True
     Dim borderWallsListX As New List(Of Integer)
     Dim borderWallsListY As New List(Of Integer)
+    Public trailColor As Color = Color.Pink
     Private Sub MazeForm_Shown(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.Text = "Maze"
+        Me.WindowState = FormWindowState.Maximized
         Me.BackColor = Color.Black
         Me.KeyPreview = True
+        If gridSize = 21 Then
+            cellSize = 35
+        ElseIf gridSize = 31 Then
+            cellSize = 23
+        ElseIf gridSize = 45 Then
+            cellSize = 17
+        ElseIf gridSize = 49 Then
+            cellSize = 16
+        End If
+
         Panel1.Location = New Point(10 + cellSize, 10 + cellSize)
         Panel1.Size = New Size(gridSize * cellSize, gridSize * cellSize)
         Me.Controls.Add(Panel1)
@@ -351,14 +363,16 @@
 
     Sub CheckIfExitReached(avatarPictureBox)
         If avatarPictureBox.Location = exitCell.Location Then
-            MessageBox.Show("You have won.")
+            Me.Hide()
+            MessageBox.Show("You have won! Congratulations")
+            MenuForm.Show()
         End If
     End Sub
 
     Sub CreateTrail(avatarPictureBox)
         For Each cell In allCells
             If cell.Location = avatarPictureBox.Location Then
-                cell.BackColor = Color.Pink
+                cell.BackColor = trailColor
                 Exit For
             End If
         Next

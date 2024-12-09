@@ -25,6 +25,7 @@ Partial Class MenuForm
         Button1 = New Button()
         Button2 = New Button()
         Button3 = New Button()
+        Button4 = New Button()
         SuspendLayout()
         ' 
         ' Button1
@@ -54,12 +55,22 @@ Partial Class MenuForm
         Button3.Text = "Hard"
         Button3.UseVisualStyleBackColor = True
         ' 
+        ' Button4
+        ' 
+        Button4.Location = New Point(432, -29)
+        Button4.Name = "Button4"
+        Button4.Size = New Size(245, 228)
+        Button4.TabIndex = 3
+        Button4.Text = "Insane"
+        Button4.UseVisualStyleBackColor = True
+        ' 
         ' MenuForm
         ' 
         AutoScaleDimensions = New SizeF(8F, 20F)
         AutoScaleMode = AutoScaleMode.Font
         BackColor = SystemColors.ActiveCaptionText
         ClientSize = New Size(953, 554)
+        Controls.Add(Button4)
         Controls.Add(Button3)
         Controls.Add(Button2)
         Controls.Add(Button1)
@@ -71,4 +82,5 @@ Partial Class MenuForm
     Friend WithEvents Button1 As Button
     Friend WithEvents Button2 As Button
     Friend WithEvents Button3 As Button
+    Friend WithEvents Button4 As Button
 End Class
