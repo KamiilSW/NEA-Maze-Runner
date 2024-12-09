@@ -17,7 +17,7 @@
     Dim rightEdgeHasWalls As Boolean = True
     Dim borderWallsListX As New List(Of Integer)
     Dim borderWallsListY As New List(Of Integer)
-    Public trailColor As Color = Color.Pink
+    Public Shared trailColour As Color
     Private Sub MazeForm_Shown(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.Text = "Maze"
         Me.WindowState = FormWindowState.Maximized
@@ -361,9 +361,22 @@
 
         Return False
     End Function
-
+    Public level As Integer
     Sub CheckIfExitReached(avatarPictureBox)
         If avatarPictureBox.Location = exitCell.Location Then
+            If gridSize = 21 Then
+                MenuForm.score += 1
+            ElseIf gridSize = 31 Then
+                MenuForm.score += 2
+            ElseIf gridSize = 45 Then
+                MenuForm.score += 3
+            ElseIf gridSize = 49 Then
+                MenuForm.score += 4
+            End If
+
+            level = MenuForm.score \ 10
+
+            MenuForm.Label1.Text = "Level " + Str(level)
             Me.Hide()
             MessageBox.Show("You have won! Congratulations")
             MenuForm.Show()
@@ -373,7 +386,7 @@
     Sub CreateTrail(avatarPictureBox)
         For Each cell In allCells
             If cell.Location = avatarPictureBox.Location Then
-                cell.BackColor = trailColor
+                cell.BackColor = trailColour
                 Exit For
             End If
         Next
