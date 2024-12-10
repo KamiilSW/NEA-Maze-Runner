@@ -1,4 +1,6 @@
-﻿Public Class MazeForm
+﻿Imports System.Data.SqlClient
+
+Public Class MazeForm
     Public gridSize As Integer
     Public cellSize As Integer
     Dim counter As Integer = 0
@@ -375,6 +377,8 @@
             End If
 
             level = MenuForm.score \ 10
+
+            MenuForm.databaseOperations.UpdateValue(1, MenuForm.score)
 
             MenuForm.Label1.Text = "Level " + Str(level)
             Me.Hide()

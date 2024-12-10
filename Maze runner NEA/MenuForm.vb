@@ -1,5 +1,6 @@
 ﻿Public Class MenuForm
-    Public Shared score As Integer
+    Public databaseOperations As New DatabaseOperations()
+    Public Shared score As Integer = DatabaseOperations.GetValue(1)
     Public Sub MenuForm_Shown(sender As Object, e As EventArgs) Handles MyBase.Load
         MenuForm_Load(sender, e)
     End Sub
@@ -31,8 +32,8 @@
 
     Sub CheckLevelToUpdateCosmetics()
         If MazeForm.level = 0 Then
-            Avatar.avatarColour = Color.DarkGoldenrod
-            MazeForm.trailColour = Color.Crimson
+            Avatar.avatarColour = Color.Gray
+            MazeForm.trailColour = Color.Aquamarine
         ElseIf MazeForm.level = 1 Or MazeForm.level = 6 Then
             Avatar.avatarColour = Color.PeachPuff
             MazeForm.trailColour = Color.PowderBlue
@@ -83,7 +84,7 @@
     Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
         Dim InsaneMazeInstance = New MazeForm
         InsaneMazeInstance.gridSize = 49
-        InsaneMazeInstance.trailColour = Color.Black
+        MazeForm.trailColour = Color.Black
 
         InsaneMazeInstance.Show()
         Hide()
