@@ -39,6 +39,13 @@ Public Class MazeForm
         Panel1.Location = New Point(Me.Width / 4, 10 + cellSize)
         Panel1.Size = New Size(gridSize * cellSize, gridSize * cellSize)
         Me.Controls.Add(Panel1)
+
+        For Each cell In Panel1.Controls
+            cell.Dispose()
+            cell.Remove()
+        Next
+        Panel1.Controls.Clear()
+
         Dim isAWall As Boolean = True
 
         For i As Integer = 0 To gridSize - 1
@@ -91,7 +98,6 @@ Public Class MazeForm
         CalibrateWallsList()
         avatar.AvatarInitilization(Panel1, startCell, cellSize)
     End Sub
-
     Sub GenerateMaze(startCell)
         Dim previousCell As PictureBox = Nothing
         Dim currentCell As PictureBox = startCell
@@ -114,7 +120,6 @@ Public Class MazeForm
             End If
         Loop Until Stack.Count = 0
     End Sub
-
     Dim random As New Random()
     Sub BuildPathToNeighbour(currentCell, previousCell)
         VisitCell(currentCell)
@@ -188,7 +193,6 @@ Public Class MazeForm
 
         exitCell.BackColor = Color.Yellow
     End Sub
-
     Sub FindStartCell()
         Dim random As New Random()
 
@@ -197,7 +201,6 @@ Public Class MazeForm
             startCell = allCells.Item(randInt)
         Loop Until startCell.BackColor = Color.Black
     End Sub
-
     Sub AddEdgeWalls()
         Dim panelWidth As Integer = Panel1.Width
         Dim panelHeight As Integer = Panel1.Height
@@ -276,7 +279,6 @@ Public Class MazeForm
             Next
         End If
     End Sub
-
     Sub CalibrateWallsList()
         wallsList.Clear()
 
@@ -286,10 +288,10 @@ Public Class MazeForm
             End If
         Next
     End Sub
-
     Public Sub MazeForm_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyDown
         Dim avatarPictureBox = avatar.Avatar
         Dim targetLocation = Nothing
+        CalibrateWallsList()
 
         If e.KeyCode = Keys.W Then
             targetLocation = New Point(avatarPictureBox.Location.X, avatarPictureBox.Location.Y - cellSize)
@@ -352,7 +354,6 @@ Public Class MazeForm
         CheckIfExitReached(avatarPictureBox)
         CreateTrail(avatarPictureBox)
     End Sub
-
     Function ThereIsABorderWallInTheWay(targetLocation As Point) As Boolean
         For i = 0 To borderWallsListX.Count - 1
             If targetLocation = New Point(borderWallsListX.Item(i) - Panel1.Location.X, borderWallsListY.Item(i) - Panel1.Location.Y) Then
@@ -367,26 +368,22 @@ Public Class MazeForm
     Sub CheckIfExitReached(avatarPictureBox)
         If avatarPictureBox.Location = exitCell.Location Then
             If gridSize = 21 Then
-                MenuForm.score += 1
+                LoginForm.score += 1
             ElseIf gridSize = 31 Then
-                MenuForm.score += 2
+                LoginForm.score += 2
             ElseIf gridSize = 45 Then
-                MenuForm.score += 3
+                LoginForm.score += 3
             ElseIf gridSize = 49 Then
-                MenuForm.score += 4
+                LoginForm.score += 4
             End If
 
-            level = MenuForm.score \ 10
+            level = LoginForm.score \ 10
 
-            MenuForm.databaseOperations.UpdateValue(1, MenuForm.score)
-
-            MenuForm.Label1.Text = "Level " + Str(level)
+            MenuForm.Label1.Text = "Score " + Str(LoginForm.score)
             Me.Hide()
-            MessageBox.Show("You have won! Congratulations")
             MenuForm.Show()
         End If
     End Sub
-
     Sub CreateTrail(avatarPictureBox)
         For Each cell In allCells
             If cell.Location = avatarPictureBox.Location Then

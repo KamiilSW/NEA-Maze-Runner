@@ -1,0 +1,6 @@
+﻿CREATE TABLE [dbo].[Table]
+(
+	[ID] INT NOT NULL PRIMARY KEY, 
+    [UserName] NVARCHAR(50) NOT NULL, 
+    [Score] INT NULL DEFAULT 0
+)

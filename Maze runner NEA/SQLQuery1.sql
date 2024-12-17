@@ -1,4 +1,0 @@
-﻿CREATE TABLE MyTable (
-    ID INT IDENTITY(1,1) PRIMARY KEY,
-    score INT NOT NULL
-);
