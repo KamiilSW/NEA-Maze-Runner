@@ -1,4 +1,5 @@
-﻿Imports System.Data.SqlClient
+﻿Imports System.Configuration
+Imports System.Data.SqlClient
 
 Public Class MazeForm
     Public gridSize As Integer
@@ -379,6 +380,8 @@ Public Class MazeForm
 
             level = LoginForm.score \ 10
 
+            UpdateScoreInDatabase(LoginForm.userName, LoginForm.score)
+
             MenuForm.Label1.Text = "Score " + Str(LoginForm.score)
             Me.Hide()
             MenuForm.Show()
@@ -391,5 +394,40 @@ Public Class MazeForm
                 Exit For
             End If
         Next
+    End Sub
+    Private Sub UpdateScoreInDatabase(userName As String, newScore As Integer)
+        ' Retrieve the connection string from App.config
+        Dim connectionString As String = ConfigurationManager.ConnectionStrings("DatabaseConnection").ConnectionString
+
+        ' SQL query to update the score for the given username
+        Dim query As String = "UPDATE Users SET Score = @NewScore WHERE UserName = @UserName"
+
+        ' Using block to ensure connection is properly closed
+        Using connection As New SqlConnection(connectionString)
+            Using command As New SqlCommand(query, connection)
+                ' Add parameters to prevent SQL Injection
+                command.Parameters.AddWithValue("@UserName", userName)
+                command.Parameters.AddWithValue("@NewScore", newScore)
+
+                Try
+                    ' Open the database connection
+                    connection.Open()
+
+                    ' Execute the query
+                    Dim rowsAffected As Integer = command.ExecuteNonQuery()
+
+                    ' Check if the update was successful
+                    If rowsAffected > 0 Then
+                        MessageBox.Show("Score updated successfully in the database!")
+                    Else
+                        MessageBox.Show("No matching username found. Score was not updated.")
+                    End If
+
+                Catch ex As Exception
+                    ' Handle any errors that may occur
+                    MessageBox.Show("Error updating score: " & ex.Message)
+                End Try
+            End Using
+        End Using
     End Sub
 End Class
