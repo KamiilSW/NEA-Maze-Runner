@@ -83,7 +83,7 @@ Public Class LoginForm
 
                 Catch ex As Exception
                     ' Log the exception or display a message
-                    MessageBox.Show("Error: " & ex.Message)
+                    'MessageBox.Show("Error: " & ex.Message)
                 End Try
             End Using
         End Using
@@ -116,7 +116,7 @@ Public Class LoginForm
                     If result IsNot Nothing Then
                         ' Update the Shared score variable with the retrieved score
                         score = result.ToString()
-                        MessageBox.Show("Score updated successfully: " & score)
+                        'MessageBox.Show("Score updated successfully: " & score)
                     Else
                         ' If no record is found, display a message
                         score = 0
@@ -124,7 +124,7 @@ Public Class LoginForm
 
                 Catch ex As Exception
                     ' Handle any errors that may occur
-                    MessageBox.Show("Error: " & ex.Message)
+                    'MessageBox.Show("Error: " & ex.Message)
                 End Try
             End Using
         End Using
