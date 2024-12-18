@@ -23,6 +23,7 @@ Partial Class MazeForm
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Panel1 = New Panel()
+        Button1 = New Button()
         SuspendLayout()
         ' 
         ' Panel1
@@ -32,17 +33,28 @@ Partial Class MazeForm
         Panel1.Size = New Size(250, 125)
         Panel1.TabIndex = 0
         ' 
-        ' Form1
+        ' Button1
         ' 
-        AutoScaleDimensions = New SizeF(8.0F, 20.0F)
+        Button1.Location = New Point(685, 26)
+        Button1.Name = "Button1"
+        Button1.Size = New Size(94, 29)
+        Button1.TabIndex = 1
+        Button1.Text = "Exit Maze"
+        Button1.UseVisualStyleBackColor = True
+        ' 
+        ' MazeForm
+        ' 
+        AutoScaleDimensions = New SizeF(8F, 20F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(800, 450)
+        Controls.Add(Button1)
         Controls.Add(Panel1)
-        Name = "Form1"
+        Name = "MazeForm"
         Text = "Form1"
         ResumeLayout(False)
     End Sub
 
     Public WithEvents Panel1 As New System.Windows.Forms.Panel
+    Friend WithEvents Button1 As Button
 
 End Class

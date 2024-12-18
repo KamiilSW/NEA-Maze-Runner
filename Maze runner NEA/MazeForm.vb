@@ -25,6 +25,14 @@ Public Class MazeForm
         Me.Text = "Maze"
         Me.WindowState = FormWindowState.Maximized
         Me.BackColor = Color.Black
+
+        Button1.BringToFront()
+        Button1.Location = New Point((Me.Width - (Me.Width / 5)), Button1.Location.Y)
+        Button1.Width = Me.Width / 6
+        Button1.Height = Me.Width / 20
+        Button1.BackColor = Color.Black
+        Button1.ForeColor = Color.White
+
         Me.KeyPreview = True
 
         If gridSize = 21 Then
@@ -429,5 +437,10 @@ Public Class MazeForm
                 End Try
             End Using
         End Using
+    End Sub
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        Me.Hide()
+        MenuForm.Show()
     End Sub
 End Class

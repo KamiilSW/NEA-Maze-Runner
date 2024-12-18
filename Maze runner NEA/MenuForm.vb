@@ -5,27 +5,38 @@
     Public Sub MenuForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.Text = "Menu"
         Me.WindowState = FormWindowState.Maximized
-        Button1.Dock = DockStyle.Left
         Button1.Width = Me.Width / 4
+        Button1.Height = Me.Height - (Me.Height / 4)
+        Button1.Location = New Point(Me.Location.X, Button1.Location.Y - 50)
 
-        Button2.Dock = DockStyle.Left
         Button2.Width = Me.Width / 4
-        Button2.Location = New Point(Button2.Location.X + Button1.Width, Button2.Location.Y)
-
-        Button4.Dock = DockStyle.Right
-        Button4.Width = Me.Width / 4
+        Button2.Height = Me.Height - (Me.Height / 4)
+        Button2.Location = New Point(Me.Location.X + Button2.Width, Button2.Location.Y - 50)
 
         Button3.Width = Me.Width / 4
-        Button3.Height = Me.Height
-        Button3.Location = New Point(Button4.Location.X - Button3.Width, Button4.Location.Y)
+        Button3.Height = Me.Height - (Me.Height / 4)
+        Button3.Location = New Point(Me.Location.X + (Button3.Width * 2), Button4.Location.Y - 50)
 
-        Label1.Text = "Score " + Str(LoginForm.score)
-        Label1.BackColor = Color.DarkSlateGray
-        Label1.ForeColor = Color.White
-        Label1.Height = Label1.Height * 2
-        Label1.Width = Label1.Width * 6
-        Label1.Location = New Point((Me.Width / 2) - (Label1.Width * 2), 10)
-        Label1.BringToFront()
+        Button4.Width = Me.Width / 4
+        Button4.Height = Me.Height - (Me.Height / 4)
+        Button4.Location = New Point(Me.Location.X + (Button4.Width * 3), Button4.Location.Y - 50)
+
+        Button5.Text = "Level " + Str(LoginForm.score \ 10)
+        Button5.BackColor = Color.Black
+        Button5.ForeColor = Color.White
+        Button5.Location = New Point(Me.Location.X, (Button1.Location.Y + Button1.Height))
+        Button5.Height = Me.Height - Button1.Height
+        Button5.Width = Me.Width \ 2
+        Button5.BringToFront()
+
+        Button6.Text = "Close Program"
+        Button6.BackColor = Color.Black
+        Button6.ForeColor = Color.White
+        Button6.Location = New Point(Button5.Location.X + Button5.Width, Button5.Location.Y)
+        Button6.Height = Me.Height - Button1.Height
+        Button6.Width = Me.Width / 2
+        Button6.BringToFront()
+
         Me.Show()
     End Sub
 
@@ -93,5 +104,9 @@
 
         InsaneMazeInstance.Show()
         Hide()
+    End Sub
+
+    Private Sub Button6_Click(sender As Object, e As EventArgs) Handles Button6.Click
+        Me.Close()
     End Sub
 End Class
