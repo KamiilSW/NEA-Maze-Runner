@@ -26,7 +26,6 @@ Partial Class MenuForm
         Button2 = New Button()
         Button3 = New Button()
         Button4 = New Button()
-        Label1 = New Label()
         Button5 = New Button()
         Button6 = New Button()
         SuspendLayout()
@@ -37,7 +36,7 @@ Partial Class MenuForm
         Button1.FlatStyle = FlatStyle.Flat
         Button1.Font = New Font("Segoe UI Semibold", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point)
         Button1.ForeColor = SystemColors.ButtonHighlight
-        Button1.Location = New Point(12, 154)
+        Button1.Location = New Point(-22, 176)
         Button1.Name = "Button1"
         Button1.Size = New Size(245, 228)
         Button1.TabIndex = 0
@@ -50,7 +49,7 @@ Partial Class MenuForm
         Button2.FlatStyle = FlatStyle.Flat
         Button2.Font = New Font("Segoe UI Semibold", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point)
         Button2.ForeColor = SystemColors.ButtonHighlight
-        Button2.Location = New Point(263, 154)
+        Button2.Location = New Point(229, 176)
         Button2.Name = "Button2"
         Button2.Size = New Size(245, 228)
         Button2.TabIndex = 1
@@ -63,7 +62,7 @@ Partial Class MenuForm
         Button3.FlatStyle = FlatStyle.Flat
         Button3.Font = New Font("Segoe UI Semibold", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point)
         Button3.ForeColor = SystemColors.ButtonHighlight
-        Button3.Location = New Point(514, 154)
+        Button3.Location = New Point(480, 176)
         Button3.Name = "Button3"
         Button3.Size = New Size(245, 228)
         Button3.TabIndex = 2
@@ -76,26 +75,17 @@ Partial Class MenuForm
         Button4.FlatStyle = FlatStyle.Flat
         Button4.Font = New Font("Segoe UI Semibold", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point)
         Button4.ForeColor = SystemColors.ButtonHighlight
-        Button4.Location = New Point(765, 154)
+        Button4.Location = New Point(731, 176)
         Button4.Name = "Button4"
         Button4.Size = New Size(245, 228)
         Button4.TabIndex = 3
         Button4.Text = "Insane"
         Button4.UseVisualStyleBackColor = False
         ' 
-        ' Label1
-        ' 
-        Label1.AutoSize = True
-        Label1.Location = New Point(438, 32)
-        Label1.Name = "Label1"
-        Label1.Size = New Size(53, 20)
-        Label1.TabIndex = 4
-        Label1.Text = "Label1"
-        ' 
         ' Button5
         ' 
         Button5.Font = New Font("Segoe UI Semibold", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point)
-        Button5.Location = New Point(199, 54)
+        Button5.Location = New Point(165, 76)
         Button5.Name = "Button5"
         Button5.Size = New Size(309, 193)
         Button5.TabIndex = 5
@@ -106,7 +96,7 @@ Partial Class MenuForm
         ' Button6
         ' 
         Button6.Font = New Font("Segoe UI Semibold", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point)
-        Button6.Location = New Point(550, 75)
+        Button6.Location = New Point(516, 97)
         Button6.Name = "Button6"
         Button6.Size = New Size(334, 162)
         Button6.TabIndex = 6
@@ -121,7 +111,6 @@ Partial Class MenuForm
         ClientSize = New Size(953, 554)
         Controls.Add(Button6)
         Controls.Add(Button5)
-        Controls.Add(Label1)
         Controls.Add(Button4)
         Controls.Add(Button3)
         Controls.Add(Button2)
@@ -129,14 +118,12 @@ Partial Class MenuForm
         Name = "MenuForm"
         Text = "Form2"
         ResumeLayout(False)
-        PerformLayout()
     End Sub
 
     Friend WithEvents Button1 As Button
     Friend WithEvents Button2 As Button
     Friend WithEvents Button3 As Button
     Friend WithEvents Button4 As Button
-    Friend WithEvents Label1 As Label
     Friend WithEvents Button5 As Button
     Friend WithEvents Button6 As Button
 End Class

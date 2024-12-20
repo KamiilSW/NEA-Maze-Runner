@@ -1,4 +1,7 @@
 ﻿Public Class MenuForm
+    Dim buttonColour As New Color
+    Dim alternativeButtonColour As New Color
+    Dim level As Integer
     Public Sub MenuForm_Shown(sender As Object, e As EventArgs) Handles MyBase.Load
         MenuForm_Load(sender, e)
     End Sub
@@ -22,22 +25,26 @@
         Button4.Location = New Point(Me.Location.X + (Button4.Width * 3), Button4.Location.Y - 50)
 
         Button5.Text = "Level " + Str(LoginForm.score \ 10)
-        Button5.BackColor = Color.Black
-        Button5.ForeColor = Color.White
         Button5.Location = New Point(Me.Location.X, (Button1.Location.Y + Button1.Height))
         Button5.Height = Me.Height - Button1.Height
         Button5.Width = Me.Width \ 2
         Button5.BringToFront()
 
         Button6.Text = "Close Program"
-        Button6.BackColor = Color.Black
-        Button6.ForeColor = Color.White
         Button6.Location = New Point(Button5.Location.X + Button5.Width, Button5.Location.Y)
         Button6.Height = Me.Height - Button1.Height
         Button6.Width = Me.Width / 2
         Button6.BringToFront()
 
+
+        CheckLevel()
+        ChangeMenuColours()
+
         Me.Show()
+    End Sub
+
+    Sub CheckLevel()
+        level = MazeForm.level
     End Sub
 
     Sub CheckLevelToUpdateCosmetics()
@@ -62,6 +69,64 @@
         Else
             Avatar.avatarColour = Color.DarkGoldenrod
             MazeForm.trailColour = Color.Crimson
+        End If
+    End Sub
+
+    Sub ChangeMenuColours()
+        If level = 0 Then
+            Button1.BackColor = Color.Gray
+            Button2.BackColor = Color.Gray
+            Button3.BackColor = Color.Gray
+            Button4.BackColor = Color.Gray
+            Button5.BackColor = Color.Aquamarine
+            Button6.BackColor = Color.Aquamarine
+            Button5.ForeColor = Color.Black
+            Button6.ForeColor = Color.Black
+        ElseIf level = 1 Or level = 6 Then
+            Button1.BackColor = Color.PeachPuff
+            Button2.BackColor = Color.PeachPuff
+            Button3.BackColor = Color.PeachPuff
+            Button4.BackColor = Color.PeachPuff
+            Button5.BackColor = Color.PowderBlue
+            Button6.BackColor = Color.PowderBlue
+            Button5.ForeColor = Color.Black
+            Button6.ForeColor = Color.Black
+        ElseIf level = 2 Or level = 7 Then
+            Button1.BackColor = Color.Gold
+            Button2.BackColor = Color.Gold
+            Button3.BackColor = Color.Gold
+            Button4.BackColor = Color.Gold
+            Button5.BackColor = Color.Red
+            Button6.BackColor = Color.Red
+            Button5.ForeColor = Color.White
+            Button6.ForeColor = Color.White
+        ElseIf level = 3 Or level = 8 Then
+            Button1.BackColor = Color.AntiqueWhite
+            Button2.BackColor = Color.AntiqueWhite
+            Button3.BackColor = Color.AntiqueWhite
+            Button4.BackColor = Color.AntiqueWhite
+            Button5.BackColor = Color.Beige
+            Button6.BackColor = Color.Beige
+            Button5.ForeColor = Color.Black
+            Button6.ForeColor = Color.Black
+        ElseIf level = 4 Or level = 9 Then
+            Button1.BackColor = Color.BlueViolet
+            Button2.BackColor = Color.BlueViolet
+            Button3.BackColor = Color.BlueViolet
+            Button4.BackColor = Color.BlueViolet
+            Button5.BackColor = Color.BlanchedAlmond
+            Button6.BackColor = Color.BlanchedAlmond
+            Button5.ForeColor = Color.Black
+            Button6.ForeColor = Color.Black
+        Else
+            Button1.BackColor = Color.DarkGoldenrod
+            Button2.BackColor = Color.DarkGoldenrod
+            Button3.BackColor = Color.DarkGoldenrod
+            Button4.BackColor = Color.DarkGoldenrod
+            Button5.BackColor = Color.Crimson
+            Button6.BackColor = Color.Crimson
+            Button5.ForeColor = Color.White
+            Button6.ForeColor = Color.White
         End If
     End Sub
 

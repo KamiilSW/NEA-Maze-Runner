@@ -6,10 +6,15 @@ Public Class LoginForm
     Public Shared score As String = 0
     Private Sub LoginForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.WindowState = FormWindowState.Maximized
+        Me.BackColor = Color.Black
         Me.Text = "Login"
-        Label1.Location = New Point(Me.Width / 4, Me.Height / 2)
-        TextBox1.Location = New Point(Me.Width / 4, (Me.Height / 2) + (Label1.Height + 5))
-        Button1.Location = New Point(Me.Width / 4, (Me.Height / 2) + (Label1.Height * 2) + 5)
+        Label1.Location = New Point((Me.Width / 2) - (Label1.Width), Me.Height / 2)
+        TextBox1.Location = New Point((Me.Width / 2) - (TextBox1.Width), (Me.Height / 2) + (Label1.Height) + 5)
+        Button1.Location = New Point((Me.Width / 2) - (Button1.Width), (Me.Height / 2) + (TextBox1.Height * 2) + 5)
+        Label1.Location = New Point(TextBox1.Location.X, Label1.Location.Y)
+        Label1.BackColor = Color.DarkSlateGray
+        TextBox1.BackColor = Color.DarkSlateGray
+        Button1.BackColor = Color.DarkSlateGray
     End Sub
 
     Private Sub TextBox1_TextChanged(sender As Object, e As EventArgs) Handles TextBox1.TextChanged

@@ -191,24 +191,21 @@ Public Class MazeForm
         Next
     End Sub
     Sub FindExit()
-        Dim randInt As Integer
-        Dim visitedNeighbours As New List(Of PictureBox)
-
-        Do
-            randInt = random.Next(CellsOnEdge.Count)
-
-            exitCell = CellsOnEdge.Item(randInt)
-        Loop Until exitCell.BackColor = Color.Black
+        For Each wall In wallsList
+            If wall.BackColor = Color.Black Then
+                exitCell = wall
+            End If
+        Next
 
         exitCell.BackColor = Color.Yellow
     End Sub
     Sub FindStartCell()
-        Dim random As New Random()
-
-        Do
-            Dim randInt As Integer = random.Next(allCells.Count)
-            startCell = allCells.Item(randInt)
-        Loop Until startCell.BackColor = Color.Black
+        For Each wall In wallsList
+            If wall.BackColor = Color.Black Then
+                startCell = wall
+                Exit Sub
+            End If
+        Next
     End Sub
     Sub AddEdgeWalls()
         Dim panelWidth As Integer = Panel1.Width
@@ -386,11 +383,11 @@ Public Class MazeForm
                 LoginForm.score += 4
             End If
 
-            level = LoginForm.score \ 10
-
             UpdateScoreInDatabase(LoginForm.userName, LoginForm.score)
 
-            MenuForm.Label1.Text = "Score " + Str(LoginForm.score)
+            level = LoginForm.score \ 10
+
+            MenuForm.Button5.Text = "Level " + Str(LoginForm.score \ 10)
             Me.Hide()
             MenuForm.Show()
         End If
