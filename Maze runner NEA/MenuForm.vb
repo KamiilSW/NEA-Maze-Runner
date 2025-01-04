@@ -36,15 +36,9 @@
         Button6.Width = Me.Width / 2
         Button6.BringToFront()
 
-
-        CheckLevel()
         ChangeMenuColours()
 
         Me.Show()
-    End Sub
-
-    Sub CheckLevel()
-        level = MazeForm.level
     End Sub
 
     Sub CheckLevelToUpdateCosmetics()
@@ -73,7 +67,7 @@
     End Sub
 
     Sub ChangeMenuColours()
-        If level = 0 Then
+        If (LoginForm.score \ 10) = 0 Then
             Button1.BackColor = Color.Gray
             Button2.BackColor = Color.Gray
             Button3.BackColor = Color.Gray
@@ -82,7 +76,7 @@
             Button6.BackColor = Color.Aquamarine
             Button5.ForeColor = Color.Black
             Button6.ForeColor = Color.Black
-        ElseIf level = 1 Or level = 6 Then
+        ElseIf (LoginForm.score \ 10) = 1 Or (LoginForm.score \ 10) = 6 Then
             Button1.BackColor = Color.PeachPuff
             Button2.BackColor = Color.PeachPuff
             Button3.BackColor = Color.PeachPuff
@@ -91,7 +85,7 @@
             Button6.BackColor = Color.PowderBlue
             Button5.ForeColor = Color.Black
             Button6.ForeColor = Color.Black
-        ElseIf level = 2 Or level = 7 Then
+        ElseIf (LoginForm.score \ 10) = 2 Or (LoginForm.score \ 10) = 7 Then
             Button1.BackColor = Color.Gold
             Button2.BackColor = Color.Gold
             Button3.BackColor = Color.Gold
@@ -100,7 +94,7 @@
             Button6.BackColor = Color.Red
             Button5.ForeColor = Color.White
             Button6.ForeColor = Color.White
-        ElseIf level = 3 Or level = 8 Then
+        ElseIf (LoginForm.score \ 10) = 3 Or (LoginForm.score \ 10) = 8 Then
             Button1.BackColor = Color.AntiqueWhite
             Button2.BackColor = Color.AntiqueWhite
             Button3.BackColor = Color.AntiqueWhite
@@ -109,7 +103,7 @@
             Button6.BackColor = Color.Beige
             Button5.ForeColor = Color.Black
             Button6.ForeColor = Color.Black
-        ElseIf level = 4 Or level = 9 Then
+        ElseIf (LoginForm.score \ 10) = 4 Or (LoginForm.score \ 10) = 9 Then
             Button1.BackColor = Color.BlueViolet
             Button2.BackColor = Color.BlueViolet
             Button3.BackColor = Color.BlueViolet
