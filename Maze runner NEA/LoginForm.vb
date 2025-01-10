@@ -8,13 +8,17 @@ Public Class LoginForm
         Me.WindowState = FormWindowState.Maximized
         Me.BackColor = Color.Black
         Me.Text = "Login"
-        Label1.Location = New Point((Me.Width / 2) - (Label1.Width), Me.Height / 2)
-        TextBox1.Location = New Point((Me.Width / 2) - (TextBox1.Width), (Me.Height / 2) + (Label1.Height) + 5)
-        Button1.Location = New Point((Me.Width / 2) - (Button1.Width), (Me.Height / 2) + (TextBox1.Height * 2) + 5)
+        PictureBox2.Location = Me.Location
+        PictureBox2.Width = Me.Width
+        PictureBox2.Height = Me.Height
+        PictureBox1.Location = New Point(Me.Location.X + Me.Width - PictureBox1.Width - 10, Me.Location.Y + Me.Height - PictureBox1.Height - 10)
+        Label1.Location = New Point((Me.Width / 2) - (Label1.Width), (Me.Height / 2) - (Label1.Height * 3))
+        TextBox1.Location = New Point((Me.Width / 2) - (TextBox1.Width), (Me.Height / 2) + 5 - (Label1.Height * 2))
+        Button1.Location = New Point(TextBox1.Location.X, (Me.Height / 2) + 15 - (Label1.Height))
         Label1.Location = New Point(TextBox1.Location.X, Label1.Location.Y)
-        Label1.BackColor = Color.DarkSlateGray
-        TextBox1.BackColor = Color.DarkSlateGray
-        Button1.BackColor = Color.DarkSlateGray
+        Label1.BackColor = Color.LightCyan
+        TextBox1.BackColor = Color.LightCyan
+        Button1.BackColor = Color.LightCyan
     End Sub
 
     Private Sub TextBox1_TextChanged(sender As Object, e As EventArgs) Handles TextBox1.TextChanged
@@ -133,5 +137,9 @@ Public Class LoginForm
                 End Try
             End Using
         End Using
+    End Sub
+
+    Private Sub TextBox2_TextChanged(sender As Object, e As EventArgs)
+
     End Sub
 End Class
