@@ -8,17 +8,18 @@ Public Class LoginForm
         Me.WindowState = FormWindowState.Maximized
         Me.BackColor = Color.Black
         Me.Text = "Login"
-        PictureBox2.Location = Me.Location
-        PictureBox2.Width = Me.Width
-        PictureBox2.Height = Me.Height
-        PictureBox1.Location = New Point(Me.Location.X + Me.Width - PictureBox1.Width - 10, Me.Location.Y + Me.Height - PictureBox1.Height - 10)
-        Label1.Location = New Point((Me.Width / 2) - (Label1.Width), (Me.Height / 2) - (Label1.Height * 3))
-        TextBox1.Location = New Point((Me.Width / 2) - (TextBox1.Width), (Me.Height / 2) + 5 - (Label1.Height * 2))
+        Me.BackColor = Color.MediumPurple
+        Label3.Location = New Point((Me.Width / 2) - (Label3.Width / 2), Me.Location.Y + 10)
+        Label3.BackColor = Color.MediumPurple
+        Label1.Location = New Point(Label3.Location.X, (Me.Height / 2) - (Label1.Height * 3))
+        TextBox1.Location = New Point(Label3.Location.X, (Me.Height / 2) + 5 - (Label1.Height * 2))
         Button1.Location = New Point(TextBox1.Location.X, (Me.Height / 2) + 15 - (Label1.Height))
         Label1.Location = New Point(TextBox1.Location.X, Label1.Location.Y)
-        Label1.BackColor = Color.LightCyan
-        TextBox1.BackColor = Color.LightCyan
-        Button1.BackColor = Color.LightCyan
+        Label1.BackColor = Color.MediumPurple
+        TextBox1.BackColor = Color.MediumPurple
+        Button1.BackColor = Color.MediumPurple
+        Button2.BackColor = Color.MediumPurple
+        Button2.Location = New Point(Me.Location.X + 5, Me.Location.Y + Me.Height - Button2.Height - 25)
     End Sub
 
     Private Sub TextBox1_TextChanged(sender As Object, e As EventArgs) Handles TextBox1.TextChanged
@@ -141,5 +142,9 @@ Public Class LoginForm
 
     Private Sub TextBox2_TextChanged(sender As Object, e As EventArgs)
 
+    End Sub
+
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+        Me.Close()
     End Sub
 End Class

@@ -30,7 +30,7 @@
         Button5.Width = Me.Width \ 2
         Button5.BringToFront()
 
-        Button6.Text = "Close Program"
+        Button6.Text = "Back to Login"
         Button6.Location = New Point(Button5.Location.X + Button5.Width, Button5.Location.Y)
         Button6.Height = Me.Height - Button1.Height
         Button6.Width = Me.Width / 2
@@ -166,6 +166,7 @@
     End Sub
 
     Private Sub Button6_Click(sender As Object, e As EventArgs) Handles Button6.Click
+        LoginForm.Show()
         Me.Close()
     End Sub
 End Class

@@ -25,11 +25,9 @@ Partial Class LoginForm
         Label1 = New Label()
         TextBox1 = New TextBox()
         Button1 = New Button()
-        PictureBox1 = New PictureBox()
-        PictureBox2 = New PictureBox()
         Label2 = New Label()
-        CType(PictureBox1, ComponentModel.ISupportInitialize).BeginInit()
-        CType(PictureBox2, ComponentModel.ISupportInitialize).BeginInit()
+        Label3 = New Label()
+        Button2 = New Button()
         SuspendLayout()
         ' 
         ' Label1
@@ -60,26 +58,6 @@ Partial Class LoginForm
         Button1.Text = "Enter"
         Button1.UseVisualStyleBackColor = True
         ' 
-        ' PictureBox1
-        ' 
-        PictureBox1.Image = My.Resources.Resources.Screenshot_2024_11_25_175955
-        PictureBox1.Location = New Point(12, 12)
-        PictureBox1.Name = "PictureBox1"
-        PictureBox1.Size = New Size(403, 267)
-        PictureBox1.SizeMode = PictureBoxSizeMode.StretchImage
-        PictureBox1.TabIndex = 3
-        PictureBox1.TabStop = False
-        ' 
-        ' PictureBox2
-        ' 
-        PictureBox2.Image = My.Resources.Resources.Screenshot_2025_01_10_101848
-        PictureBox2.Location = New Point(188, 258)
-        PictureBox2.Name = "PictureBox2"
-        PictureBox2.Size = New Size(559, 252)
-        PictureBox2.SizeMode = PictureBoxSizeMode.StretchImage
-        PictureBox2.TabIndex = 4
-        PictureBox2.TabStop = False
-        ' 
         ' Label2
         ' 
         Label2.AutoSize = True
@@ -88,21 +66,39 @@ Partial Class LoginForm
         Label2.Size = New Size(0, 20)
         Label2.TabIndex = 5
         ' 
+        ' Label3
+        ' 
+        Label3.AutoSize = True
+        Label3.Font = New Font("SimSun", 90F, FontStyle.Bold, GraphicsUnit.Point)
+        Label3.Location = New Point(12, 59)
+        Label3.Name = "Label3"
+        Label3.Size = New Size(899, 150)
+        Label3.TabIndex = 6
+        Label3.Text = "MAZE RUNNER"
+        ' 
+        ' Button2
+        ' 
+        Button2.Font = New Font("Tahoma", 48F, FontStyle.Regular, GraphicsUnit.Point)
+        Button2.Location = New Point(244, 374)
+        Button2.Name = "Button2"
+        Button2.Size = New Size(448, 122)
+        Button2.TabIndex = 7
+        Button2.Text = "Exit Game"
+        Button2.UseVisualStyleBackColor = True
+        ' 
         ' LoginForm
         ' 
         AutoScaleDimensions = New SizeF(8F, 20F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(1144, 572)
+        Controls.Add(Button2)
+        Controls.Add(Label3)
         Controls.Add(Label2)
-        Controls.Add(PictureBox1)
         Controls.Add(Button1)
         Controls.Add(TextBox1)
         Controls.Add(Label1)
-        Controls.Add(PictureBox2)
         Name = "LoginForm"
         Text = "LoginForm"
-        CType(PictureBox1, ComponentModel.ISupportInitialize).EndInit()
-        CType(PictureBox2, ComponentModel.ISupportInitialize).EndInit()
         ResumeLayout(False)
         PerformLayout()
     End Sub
@@ -110,7 +106,7 @@ Partial Class LoginForm
     Friend WithEvents Label1 As Label
     Friend WithEvents TextBox1 As TextBox
     Friend WithEvents Button1 As Button
-    Friend WithEvents PictureBox1 As PictureBox
-    Friend WithEvents PictureBox2 As PictureBox
     Friend WithEvents Label2 As Label
+    Friend WithEvents Label3 As Label
+    Friend WithEvents Button2 As Button
 End Class
