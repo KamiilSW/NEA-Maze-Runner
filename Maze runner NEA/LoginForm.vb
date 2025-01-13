@@ -11,15 +11,20 @@ Public Class LoginForm
         Me.BackColor = Color.MediumPurple
         Label3.Location = New Point((Me.Width / 2) - (Label3.Width / 2), Me.Location.Y + 10)
         Label3.BackColor = Color.MediumPurple
-        Label1.Location = New Point(Label3.Location.X, (Me.Height / 2) - (Label1.Height * 3))
-        TextBox1.Location = New Point(Label3.Location.X, (Me.Height / 2) + 5 - (Label1.Height * 2))
-        Button1.Location = New Point(TextBox1.Location.X, (Me.Height / 2) + 15 - (Label1.Height))
+        Label1.Location = New Point(Me.Location.X + 10, (Me.Height / 2) - (Label1.Height * 2))
+        TextBox1.Location = New Point(Me.Location.X + 10, (Me.Height / 2) + 5 - (Label1.Height))
+        Button1.Location = New Point(TextBox1.Location.X, (Me.Height / 2) + 15)
         Label1.Location = New Point(TextBox1.Location.X, Label1.Location.Y)
         Label1.BackColor = Color.MediumPurple
         TextBox1.BackColor = Color.MediumPurple
         Button1.BackColor = Color.MediumPurple
         Button2.BackColor = Color.MediumPurple
         Button2.Location = New Point(Me.Location.X + 5, Me.Location.Y + Me.Height - Button2.Height - 25)
+        PictureBox1.Location = New Point((Me.Width / 2) - 50, TextBox1.Location.Y - 80)
+        PictureBox2.Location = New Point((Me.Width / 2) - 50, Me.Location.Y)
+        PictureBox2.Height = Me.Height
+        PictureBox3.Location = New Point(Me.Location.X, Label3.Location.Y + (Label3.Width * 2))
+        PictureBox3.Width = Me.Width
     End Sub
 
     Private Sub TextBox1_TextChanged(sender As Object, e As EventArgs) Handles TextBox1.TextChanged

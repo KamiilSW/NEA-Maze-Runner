@@ -40,7 +40,7 @@ Partial Class MenuForm
         Button1.Name = "Button1"
         Button1.Size = New Size(245, 228)
         Button1.TabIndex = 0
-        Button1.Text = "Easy"
+        Button1.Text = "Easy Maze (1 Point)"
         Button1.UseVisualStyleBackColor = False
         ' 
         ' Button2
@@ -53,7 +53,7 @@ Partial Class MenuForm
         Button2.Name = "Button2"
         Button2.Size = New Size(245, 228)
         Button2.TabIndex = 1
-        Button2.Text = "Medium"
+        Button2.Text = "Medium Maze (2 Points)"
         Button2.UseVisualStyleBackColor = False
         ' 
         ' Button3
@@ -66,7 +66,7 @@ Partial Class MenuForm
         Button3.Name = "Button3"
         Button3.Size = New Size(245, 228)
         Button3.TabIndex = 2
-        Button3.Text = "Hard"
+        Button3.Text = "Hard Maze (3 Points)"
         Button3.UseVisualStyleBackColor = False
         ' 
         ' Button4
@@ -79,7 +79,7 @@ Partial Class MenuForm
         Button4.Name = "Button4"
         Button4.Size = New Size(245, 228)
         Button4.TabIndex = 3
-        Button4.Text = "Insane"
+        Button4.Text = "Insane Maze (4 Points)"
         Button4.UseVisualStyleBackColor = False
         ' 
         ' Button5
