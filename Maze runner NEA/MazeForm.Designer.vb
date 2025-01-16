@@ -35,12 +35,15 @@ Partial Class MazeForm
         ' 
         ' Button1
         ' 
+        Button1.BackColor = Color.MediumPurple
+        Button1.FlatStyle = FlatStyle.Flat
+        Button1.ForeColor = SystemColors.ControlText
         Button1.Location = New Point(685, 26)
         Button1.Name = "Button1"
         Button1.Size = New Size(94, 29)
         Button1.TabIndex = 1
         Button1.Text = "Exit Maze"
-        Button1.UseVisualStyleBackColor = True
+        Button1.UseVisualStyleBackColor = False
         ' 
         ' MazeForm
         ' 

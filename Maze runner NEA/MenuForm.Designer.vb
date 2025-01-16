@@ -28,6 +28,9 @@ Partial Class MenuForm
         Button4 = New Button()
         Button5 = New Button()
         Button6 = New Button()
+        Label1 = New Label()
+        PictureBox1 = New PictureBox()
+        CType(PictureBox1, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
         ' 
         ' Button1
@@ -35,7 +38,7 @@ Partial Class MenuForm
         Button1.BackColor = Color.Black
         Button1.FlatStyle = FlatStyle.Flat
         Button1.Font = New Font("Segoe UI Semibold", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point)
-        Button1.ForeColor = SystemColors.ButtonHighlight
+        Button1.ForeColor = SystemColors.ActiveCaptionText
         Button1.Location = New Point(-22, 176)
         Button1.Name = "Button1"
         Button1.Size = New Size(245, 228)
@@ -48,7 +51,7 @@ Partial Class MenuForm
         Button2.BackColor = Color.Black
         Button2.FlatStyle = FlatStyle.Flat
         Button2.Font = New Font("Segoe UI Semibold", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point)
-        Button2.ForeColor = SystemColors.ButtonHighlight
+        Button2.ForeColor = SystemColors.ActiveCaptionText
         Button2.Location = New Point(229, 176)
         Button2.Name = "Button2"
         Button2.Size = New Size(245, 228)
@@ -61,7 +64,7 @@ Partial Class MenuForm
         Button3.BackColor = Color.Black
         Button3.FlatStyle = FlatStyle.Flat
         Button3.Font = New Font("Segoe UI Semibold", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point)
-        Button3.ForeColor = SystemColors.ButtonHighlight
+        Button3.ForeColor = SystemColors.ActiveCaptionText
         Button3.Location = New Point(480, 176)
         Button3.Name = "Button3"
         Button3.Size = New Size(245, 228)
@@ -74,7 +77,7 @@ Partial Class MenuForm
         Button4.BackColor = Color.Black
         Button4.FlatStyle = FlatStyle.Flat
         Button4.Font = New Font("Segoe UI Semibold", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point)
-        Button4.ForeColor = SystemColors.ButtonHighlight
+        Button4.ForeColor = SystemColors.ActiveCaptionText
         Button4.Location = New Point(731, 176)
         Button4.Name = "Button4"
         Button4.Size = New Size(245, 228)
@@ -103,12 +106,36 @@ Partial Class MenuForm
         Button6.Text = "Button6"
         Button6.UseVisualStyleBackColor = True
         ' 
+        ' Label1
+        ' 
+        Label1.AutoSize = True
+        Label1.BackColor = SystemColors.ButtonHighlight
+        Label1.FlatStyle = FlatStyle.System
+        Label1.Font = New Font("SimSun", 130.2F, FontStyle.Regular, GraphicsUnit.Point)
+        Label1.ForeColor = SystemColors.ActiveCaptionText
+        Label1.Location = New Point(-11, 425)
+        Label1.Name = "Label1"
+        Label1.Size = New Size(1836, 217)
+        Label1.TabIndex = 7
+        Label1.Text = "Maze Runner Menu"
+        ' 
+        ' PictureBox1
+        ' 
+        PictureBox1.BackColor = SystemColors.ButtonHighlight
+        PictureBox1.Location = New Point(480, 29)
+        PictureBox1.Name = "PictureBox1"
+        PictureBox1.Size = New Size(370, 10)
+        PictureBox1.TabIndex = 8
+        PictureBox1.TabStop = False
+        ' 
         ' MenuForm
         ' 
         AutoScaleDimensions = New SizeF(8F, 20F)
         AutoScaleMode = AutoScaleMode.Font
         BackColor = SystemColors.ActiveCaptionText
         ClientSize = New Size(953, 554)
+        Controls.Add(PictureBox1)
+        Controls.Add(Label1)
         Controls.Add(Button6)
         Controls.Add(Button5)
         Controls.Add(Button4)
@@ -117,7 +144,9 @@ Partial Class MenuForm
         Controls.Add(Button1)
         Name = "MenuForm"
         Text = "Form2"
+        CType(PictureBox1, ComponentModel.ISupportInitialize).EndInit()
         ResumeLayout(False)
+        PerformLayout()
     End Sub
 
     Friend WithEvents Button1 As Button
@@ -126,4 +155,6 @@ Partial Class MenuForm
     Friend WithEvents Button4 As Button
     Friend WithEvents Button5 As Button
     Friend WithEvents Button6 As Button
+    Friend WithEvents Label1 As Label
+    Friend WithEvents PictureBox1 As PictureBox
 End Class

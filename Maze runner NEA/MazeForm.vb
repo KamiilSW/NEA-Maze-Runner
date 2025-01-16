@@ -24,14 +24,12 @@ Public Class MazeForm
     Private Sub MazeForm_Shown(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.Text = "Maze"
         Me.WindowState = FormWindowState.Maximized
-        Me.BackColor = Color.Black
+        Me.BackColor = Color.MediumPurple
 
         Button1.BringToFront()
         Button1.Location = New Point((Me.Width - (Me.Width / 5)), Button1.Location.Y)
         Button1.Width = Me.Width / 6
         Button1.Height = Me.Width / 20
-        Button1.BackColor = Color.Black
-        Button1.ForeColor = Color.White
 
         Me.KeyPreview = True
 
