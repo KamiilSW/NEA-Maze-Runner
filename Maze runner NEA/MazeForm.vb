@@ -1,5 +1,6 @@
 ﻿Imports System.Configuration
 Imports System.Data.SqlClient
+Imports System.Timers
 
 Public Class MazeForm
     Public gridSize As Integer
@@ -20,6 +21,8 @@ Public Class MazeForm
     Dim rightEdgeHasWalls As Boolean = True
     Dim borderWallsListX As New List(Of Integer)
     Dim borderWallsListY As New List(Of Integer)
+    Dim tmr As New System.Timers.Timer()
+    Dim timeLeft As Integer
     Public Shared trailColour As Color
     Private Sub MazeForm_Shown(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.Text = "Maze"
@@ -27,20 +30,25 @@ Public Class MazeForm
         Me.BackColor = Color.MediumPurple
 
         Button1.BringToFront()
-        Button1.Location = New Point((Me.Width - (Me.Width / 5)), Button1.Location.Y)
-        Button1.Width = Me.Width / 6
-        Button1.Height = Me.Width / 20
+        Button1.Location = New Point((Me.Width - (Me.Width / 4) + 20), Button1.Location.Y)
+
+        Label1.Location = New Point(Me.Location.X + 30, Me.Location.Y + 30)
+        Label1.Text = timeLeft
 
         Me.KeyPreview = True
 
         If gridSize = 21 Then
             cellSize = 35
+            timeLeft = 20
         ElseIf gridSize = 31 Then
             cellSize = 23
+            timeLeft = 40
         ElseIf gridSize = 45 Then
             cellSize = 17
+            timeLeft = 50
         ElseIf gridSize = 49 Then
             cellSize = 16
+            timeLeft = 70
         End If
 
         Panel1.Location = New Point(Me.Width / 4, 10 + cellSize)
@@ -104,6 +112,7 @@ Public Class MazeForm
         FindStartCell()
         CalibrateWallsList()
         avatar.AvatarInitilization(Panel1, startCell, cellSize)
+        'timerConfiguration()
     End Sub
     Sub GenerateMaze(startCell)
         Dim previousCell As PictureBox = Nothing
@@ -386,6 +395,7 @@ Public Class MazeForm
             level = LoginForm.score \ 10
 
             MenuForm.Button5.Text = "Level " + Str(LoginForm.score \ 10)
+            Timer1.Enabled = False
             Me.Hide()
             MenuForm.Show()
         End If
@@ -437,5 +447,17 @@ Public Class MazeForm
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         Me.Hide()
         MenuForm.Show()
+    End Sub
+
+    Sub Timer1_Tick() Handles Timer1.Tick
+        If timeLeft > 0 Then
+            timeLeft -= 1
+            Label1.Text = timeLeft
+        Else
+            Timer1.Enabled = False
+            MessageBox.Show("You have run out of time! Maze failed!")
+            MenuForm.Show()
+            Me.Close()
+        End If
     End Sub
 End Class

@@ -111,11 +111,11 @@ Partial Class MenuForm
         Label1.AutoSize = True
         Label1.BackColor = SystemColors.ButtonHighlight
         Label1.FlatStyle = FlatStyle.System
-        Label1.Font = New Font("SimSun", 130.2F, FontStyle.Regular, GraphicsUnit.Point)
+        Label1.Font = New Font("Verdana", 94.8F, FontStyle.Bold, GraphicsUnit.Point)
         Label1.ForeColor = SystemColors.ActiveCaptionText
         Label1.Location = New Point(-11, 425)
         Label1.Name = "Label1"
-        Label1.Size = New Size(1836, 217)
+        Label1.Size = New Size(1771, 191)
         Label1.TabIndex = 7
         Label1.Text = "Maze Runner Menu"
         ' 
