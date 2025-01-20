@@ -23,10 +23,13 @@ Partial Class MazeForm
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         components = New ComponentModel.Container()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(MazeForm))
         Panel1 = New Panel()
         Button1 = New Button()
         Timer1 = New Timer(components)
         Label1 = New Label()
+        PictureBox1 = New PictureBox()
+        CType(PictureBox1, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
         ' 
         ' Panel1
@@ -64,16 +67,28 @@ Partial Class MazeForm
         Label1.TabIndex = 2
         Label1.Text = "80"
         ' 
+        ' PictureBox1
+        ' 
+        PictureBox1.Image = CType(resources.GetObject("PictureBox1.Image"), Image)
+        PictureBox1.Location = New Point(300, 211)
+        PictureBox1.Name = "PictureBox1"
+        PictureBox1.Size = New Size(398, 227)
+        PictureBox1.SizeMode = PictureBoxSizeMode.StretchImage
+        PictureBox1.TabIndex = 3
+        PictureBox1.TabStop = False
+        ' 
         ' MazeForm
         ' 
         AutoScaleDimensions = New SizeF(8F, 20F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(800, 450)
+        Controls.Add(PictureBox1)
         Controls.Add(Label1)
         Controls.Add(Button1)
         Controls.Add(Panel1)
         Name = "MazeForm"
         Text = "Form1"
+        CType(PictureBox1, ComponentModel.ISupportInitialize).EndInit()
         ResumeLayout(False)
         PerformLayout()
     End Sub
@@ -82,5 +97,6 @@ Partial Class MazeForm
     Friend WithEvents Button1 As Button
     Friend WithEvents Timer1 As Timer
     Friend WithEvents Label1 As Label
+    Friend WithEvents PictureBox1 As PictureBox
 
 End Class

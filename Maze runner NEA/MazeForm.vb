@@ -32,6 +32,9 @@ Public Class MazeForm
         Button1.BringToFront()
         Button1.Location = New Point((Me.Width - (Me.Width / 4) + 20), Button1.Location.Y)
 
+        PictureBox1.BringToFront()
+        PictureBox1.Location = New Point(Me.Location.X + 5, Button1.Location.Y + 100)
+
         Label1.Location = New Point(Me.Location.X + 30, Me.Location.Y + 30)
         Label1.Text = timeLeft
 
@@ -39,16 +42,16 @@ Public Class MazeForm
 
         If gridSize = 21 Then
             cellSize = 35
-            timeLeft = 20
+            timeLeft = 30
         ElseIf gridSize = 31 Then
             cellSize = 23
-            timeLeft = 40
+            timeLeft = 50
         ElseIf gridSize = 45 Then
             cellSize = 17
-            timeLeft = 50
+            timeLeft = 70
         ElseIf gridSize = 49 Then
             cellSize = 16
-            timeLeft = 70
+            timeLeft = 90
         End If
 
         Panel1.Location = New Point(Me.Width / 4, 10 + cellSize)
@@ -455,6 +458,7 @@ Public Class MazeForm
             Label1.Text = timeLeft
         Else
             Timer1.Enabled = False
+            Timer1.Dispose()
             MessageBox.Show("You have run out of time! Maze failed!")
             MenuForm.Show()
             Me.Close()
