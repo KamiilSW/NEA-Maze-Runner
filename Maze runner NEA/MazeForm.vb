@@ -45,10 +45,10 @@ Public Class MazeForm
             timeLeft = 30
         ElseIf gridSize = 31 Then
             cellSize = 23
-            timeLeft = 50
+            timeLeft = 40
         ElseIf gridSize = 45 Then
             cellSize = 17
-            timeLeft = 70
+            timeLeft = 80
         ElseIf gridSize = 49 Then
             cellSize = 16
             timeLeft = 90
@@ -115,7 +115,6 @@ Public Class MazeForm
         FindStartCell()
         CalibrateWallsList()
         avatar.AvatarInitilization(Panel1, startCell, cellSize)
-        'timerConfiguration()
     End Sub
     Sub GenerateMaze(startCell)
         Dim previousCell As PictureBox = Nothing

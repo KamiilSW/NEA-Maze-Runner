@@ -14,26 +14,34 @@
         Label1.BackColor = Color.MediumPurple
         Label1.Location = New Point((Me.Width / 2) - (Label1.Width / 2), Me.Location.Y)
 
+        PictureBox2.Location = New Point(Me.Width - (Me.Width / 3.5), Me.Location.Y + Label1.Height + PictureBox1.Height)
+        PictureBox2.Width = Me.Width / 3.5
+        PictureBox2.Height = Me.Height - Label1.Height - PictureBox1.Height
+
         PictureBox1.Location = New Point(Me.Location.X, Me.Location.Y + Label1.Height)
         PictureBox1.Width = Me.Width
         PictureBox1.BackColor = Color.White
 
-        Button1.Width = Me.Width / 4
+        PictureBox3.Location = Me.Location
+        PictureBox3.Width = Me.Width
+        PictureBox3.Height = Label1.Height
+
+        Button1.Width = (Me.Width - (Me.Width / 3.5)) / 4
         Button1.Height = Me.Height - (Me.Height / 4)
         Button1.Location = New Point(Me.Location.X, Button1.Location.Y - 50)
         Button1.BackColor = Color.MediumPurple
 
-        Button2.Width = Me.Width / 4
+        Button2.Width = (Me.Width - (Me.Width / 3.5)) / 4
         Button2.Height = Me.Height - (Me.Height / 4)
         Button2.Location = New Point(Me.Location.X + Button2.Width, Button2.Location.Y - 50)
         Button2.BackColor = Color.MediumPurple
 
-        Button3.Width = Me.Width / 4
+        Button3.Width = (Me.Width - (Me.Width / 3.5)) / 4
         Button3.Height = Me.Height - (Me.Height / 4)
         Button3.Location = New Point(Me.Location.X + (Button3.Width * 2), Button4.Location.Y - 50)
         Button3.BackColor = Color.MediumPurple
 
-        Button4.Width = Me.Width / 4
+        Button4.Width = (Me.Width - (Me.Width / 3.5)) / 4
         Button4.Height = Me.Height - (Me.Height / 4)
         Button4.Location = New Point(Me.Location.X + (Button4.Width * 3), Button4.Location.Y - 50)
         Button4.BackColor = Color.MediumPurple
@@ -41,16 +49,20 @@
         Button5.Text = "Level " + Str(LoginForm.score \ 10)
         Button5.Location = New Point(Me.Location.X, (Button1.Location.Y + Button1.Height))
         Button5.Height = Me.Height - Button1.Height
-        Button5.Width = Me.Width \ 2
+        Button5.Width = (Me.Width - (Me.Width / 3.5)) / 2
         Button5.BackColor = Color.Purple
         Button5.BringToFront()
 
         Button6.Text = "Back to Login"
         Button6.Location = New Point(Button5.Location.X + Button5.Width, Button5.Location.Y)
         Button6.Height = Me.Height - Button1.Height
-        Button6.Width = Me.Width / 2
+        Button6.Width = (Me.Width - (Me.Width / 3.5)) / 2
         Button6.BackColor = Color.Purple
         Button6.BringToFront()
+
+        PictureBox3.BringToFront()
+        Label1.BringToFront()
+        PictureBox2.BringToFront()
 
         Me.Show()
     End Sub

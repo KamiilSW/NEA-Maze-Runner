@@ -130,4 +130,7 @@
   <data name="Screenshot 2025-01-20 141604" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Screenshot 2025-01-20 141604.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Screenshot 2025-01-21 170708" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Screenshot 2025-01-21 170708.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>
