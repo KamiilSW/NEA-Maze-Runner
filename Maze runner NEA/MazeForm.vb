@@ -29,29 +29,36 @@ Public Class MazeForm
         Me.WindowState = FormWindowState.Maximized
         Me.BackColor = Color.MediumPurple
 
-        Button1.BringToFront()
-        Button1.Location = New Point((Me.Width - (Me.Width / 4) + 20), Button1.Location.Y)
+        Label2.Location = New Point((Me.Width - (Me.Width / 4) + 30), Button1.Location.Y)
 
-        PictureBox1.BringToFront()
-        PictureBox1.Location = New Point(Me.Location.X + 5, Button1.Location.Y + 100)
+        Button1.BringToFront()
+        Button1.Location = New Point(Label2.Location.X, Button1.Location.Y + Label2.Height + 20)
 
         Label1.Location = New Point(Me.Location.X + 30, Me.Location.Y + 30)
         Label1.Text = timeLeft
+
+        PictureBox1.BringToFront()
+        PictureBox1.Location = New Point(Me.Location.X + 5, Label1.Location.Y + 100)
+        PictureBox1.Height = Me.Height / 2
 
         Me.KeyPreview = True
 
         If gridSize = 21 Then
             cellSize = 35
             timeLeft = 30
+            Label2.Text = "Easy Maze"
         ElseIf gridSize = 31 Then
             cellSize = 23
             timeLeft = 40
+            Label2.Text = "Medium Maze"
         ElseIf gridSize = 45 Then
             cellSize = 17
             timeLeft = 80
+            Label2.Text = "Hard Maze"
         ElseIf gridSize = 49 Then
             cellSize = 16
             timeLeft = 90
+            Label2.Text = "Insane Maze"
         End If
 
         Panel1.Location = New Point(Me.Width / 4, 10 + cellSize)

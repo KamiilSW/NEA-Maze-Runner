@@ -29,6 +29,7 @@ Partial Class MazeForm
         Timer1 = New Timer(components)
         Label1 = New Label()
         PictureBox1 = New PictureBox()
+        Label2 = New Label()
         CType(PictureBox1, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
         ' 
@@ -45,9 +46,9 @@ Partial Class MazeForm
         Button1.FlatStyle = FlatStyle.Flat
         Button1.Font = New Font("Segoe UI", 48F, FontStyle.Regular, GraphicsUnit.Point)
         Button1.ForeColor = SystemColors.ControlText
-        Button1.Location = New Point(384, 26)
+        Button1.Location = New Point(388, 26)
         Button1.Name = "Button1"
-        Button1.Size = New Size(395, 111)
+        Button1.Size = New Size(391, 111)
         Button1.TabIndex = 1
         Button1.Text = "Exit Maze"
         Button1.UseVisualStyleBackColor = False
@@ -77,11 +78,26 @@ Partial Class MazeForm
         PictureBox1.TabIndex = 3
         PictureBox1.TabStop = False
         ' 
+        ' Label2
+        ' 
+        Label2.AutoSize = True
+        Label2.BackColor = Color.MediumPurple
+        Label2.BorderStyle = BorderStyle.FixedSingle
+        Label2.FlatStyle = FlatStyle.Popup
+        Label2.Font = New Font("Arial Narrow", 48F, FontStyle.Bold, GraphicsUnit.Point)
+        Label2.ForeColor = Color.DarkRed
+        Label2.Location = New Point(388, 140)
+        Label2.Name = "Label2"
+        Label2.Size = New Size(321, 96)
+        Label2.TabIndex = 4
+        Label2.Text = "Difficulty"
+        ' 
         ' MazeForm
         ' 
         AutoScaleDimensions = New SizeF(8F, 20F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(800, 450)
+        Controls.Add(Label2)
         Controls.Add(PictureBox1)
         Controls.Add(Label1)
         Controls.Add(Button1)
@@ -98,5 +114,6 @@ Partial Class MazeForm
     Friend WithEvents Timer1 As Timer
     Friend WithEvents Label1 As Label
     Friend WithEvents PictureBox1 As PictureBox
+    Friend WithEvents Label2 As Label
 
 End Class
