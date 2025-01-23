@@ -463,11 +463,14 @@ Public Class MazeForm
             timeLeft -= 1
             Label1.Text = timeLeft
         Else
-            Timer1.Enabled = False
-            Timer1.Dispose()
-            MessageBox.Show("You have run out of time! Maze failed!")
-            MenuForm.Show()
-            Me.Close()
+            If Label1.Text = "0" Then
+                Timer1.Enabled = False
+                Timer1.Stop()
+                Timer1.Dispose()
+                MessageBox.Show("You have run out of time! Maze failed!")
+                MenuForm.Show()
+                Me.Close()
+            End If
         End If
     End Sub
 End Class
