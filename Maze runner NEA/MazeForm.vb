@@ -440,13 +440,6 @@ Public Class MazeForm
                     ' Execute the query
                     Dim rowsAffected As Integer = command.ExecuteNonQuery()
 
-                    ' Check if the update was successful
-                    'If rowsAffected > 0 Then
-                    '    MessageBox.Show("Score updated successfully in the database!")
-                    'Else
-                    '    MessageBox.Show("No matching username found. Score was not updated.")
-                    'End If
-
                 Catch ex As Exception
                     ' Handle any errors that may occur
                     MessageBox.Show("Error updating score: " & ex.Message)
