@@ -57,7 +57,7 @@ Public Class MazeForm
             Label2.Text = "Hard Maze"
         ElseIf gridSize = 49 Then
             cellSize = 16
-            timeLeft = 90
+            timeLeft = 115
             Label2.Text = "Insane Maze"
         End If
 
@@ -405,6 +405,8 @@ Public Class MazeForm
 
             MenuForm.Button5.Text = "Level " + Str(LoginForm.score \ 10)
             Timer1.Enabled = False
+            Timer1.Stop()
+            Timer1.Dispose()
             Me.Hide()
             MenuForm.Show()
         End If
@@ -454,6 +456,9 @@ Public Class MazeForm
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        Timer1.Enabled = False
+        Timer1.Stop()
+        Timer1.Dispose()
         Me.Hide()
         MenuForm.Show()
     End Sub
